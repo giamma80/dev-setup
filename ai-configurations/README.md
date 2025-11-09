@@ -25,13 +25,14 @@
 
 ### 1. Modifica la Configurazione Base
 ```bash
-cd ~/scripts/configurations
+cd ~/scripts/ai-configurations
 vim base-config.json  # ← UNICO FILE DA MODIFICARE
 ```
 
 ### 2. Rigenera Tutto Automaticamente
 ```bash
-node ../sync-configs.js
+cd ~/scripts
+node sync-configs.js
 ```
 
 ### 3. Applica nei Copilot
@@ -91,7 +92,7 @@ Segui le istruzioni in [Setup AI Copilots](#-setup-ai-copilots)
 2. **Copia configurazione**:
    ```bash
    # Apri il file generato
-   cat configurations/claude-vscode.json
+   cat ai-configurations/claude-vscode.json
    ```
 3. **Applica in VS Code**:
    - `Cmd+,` → Settings
@@ -115,7 +116,7 @@ Segui le istruzioni in [Setup AI Copilots](#-setup-ai-copilots)
    mkdir -p ~/.config/claude
    
    # Copia config generata
-   cp configurations/claude-cli-config.json ~/.config/claude/config.json
+   cp ~/scripts/ai-ai-configurations/claude-cli-config.json ~/.config/claude/config.json
    ```
 
 3. **Setup API Key**:
@@ -137,7 +138,7 @@ Segui le istruzioni in [Setup AI Copilots](#-setup-ai-copilots)
 
 1. **Apri file generato**:
    ```bash
-   cat configurations/github-copilot-vscode.json
+   cat ai-configurations/github-copilot-vscode.json
    ```
 2. **Applica in VS Code**:
    - `Cmd+,` → Settings
@@ -148,7 +149,7 @@ Segui le istruzioni in [Setup AI Copilots](#-setup-ai-copilots)
 
 1. **Leggi workflows**:
    ```bash
-   cat configurations/warp-config.md
+   cat ai-configurations/warp-config.md
    ```
 2. **Applica workflows** manualmente (non auto-generato)
 
@@ -244,14 +245,14 @@ Segui le istruzioni in [Setup AI Copilots](#-setup-ai-copilots)
 ### Workflow Completo
 ```bash
 # 1. Modifica base-config.json
-vim configurations/base-config.json
+vim ai-configurations/base-config.json
 
 # 2. Rigenera configurazioni
 node sync-configs.js
 
 # 3. Verifica output
-cat configurations/claude-vscode.json
-cat configurations/INSTRUCTIONS.md
+cat ai-configurations/claude-vscode.json
+cat ai-configurations/INSTRUCTIONS.md
 
 # 4. Commit
 git add . && git commit -m "feat: add new library XYZ to tech stack"
@@ -259,7 +260,7 @@ git push
 ```
 
 ### ⚠️ Checklist Pre-Commit
-- [ ] JSON valido: `jq . configurations/base-config.json`
+- [ ] JSON valido: `jq . ai-configurations/base-config.json`
 - [ ] Rigenerato: `node sync-configs.js`
 - [ ] File generati verificati
 - [ ] Commit message descrittivo
@@ -428,7 +429,7 @@ git push
 
 ```bash
 # Valida JSON
-jq . configurations/base-config.json
+jq . ai-configurations/base-config.json
 
 # Se errore di sintassi, correggi base-config.json
 # Poi rigenera
@@ -453,7 +454,7 @@ ls -la ~/.config/claude/config.json
 
 # Se non esiste, copia
 mkdir -p ~/.config/claude
-cp configurations/claude-cli-config.json ~/.config/claude/config.json
+cp ai-configurations/claude-cli-config.json ~/.config/claude/config.json
 ```
 
 ### API Key Claude non valida

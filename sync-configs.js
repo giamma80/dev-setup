@@ -14,7 +14,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const CONFIG_DIR = path.join(__dirname, 'configurations');
+const CONFIG_DIR = path.join(__dirname, 'ai-configurations');
 const BASE_CONFIG_PATH = path.join(CONFIG_DIR, 'base-config.json');
 
 // Leggi base-config.json
@@ -315,10 +315,10 @@ try {
   
   console.log('\n✨ Sincronizzazione completata!');
   console.log('\n📝 File generati:');
-  console.log('  - configurations/claude-vscode.json (VS Code extension)');
-  console.log('  - configurations/claude-cli-config.json (CLI terminal)');
-  console.log('  - configurations/github-copilot-vscode.json');
-  console.log('\n📖 Documentazione: configurations/README.md');
+  console.log('  - ai-configurations/claude-vscode.json (VS Code extension)');
+  console.log('  - ai-configurations/claude-cli-config.json (CLI terminal)');
+  console.log('  - ai-configurations/github-copilot-vscode.json');
+  console.log('\n📖 Documentazione: ai-configurations/README.md');
   console.log('💡 Modifica solo base-config.json e riesegui questo script.\n');
   
 } catch (error) {
