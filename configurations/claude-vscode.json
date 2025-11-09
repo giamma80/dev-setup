@@ -1,0 +1,70 @@
+{
+  "// Claude Code Configuration": "Ottimizzato per sviluppo full-stack con Git, Docker, Node, Python, AWS",
+  
+  "claude.apiKey": "YOUR_API_KEY_HERE",
+  
+  "claude.modelId": "claude-sonnet-4-20250514",
+  
+  "claude.maxTokens": 8192,
+  
+  "claude.contextWindow": {
+    "includeOpenFiles": true,
+    "includeRecentFiles": true,
+    "maxFiles": 20,
+    "includeGitChanges": true
+  },
+  
+  "claude.customInstructions": [
+    "Sono un full-stack developer che lavora con:",
+    "- Frontend: React, Next.js, TypeScript",
+    "- Backend: Node.js, Python, Docker",
+    "- Cloud: AWS, Vercel, Render",
+    "- Tools: Git, GitHub Actions, npm/pip",
+    "",
+    "Preferenze:",
+    "- Usa TypeScript quando possibile",
+    "- Segui ESLint/Prettier standards",
+    "- Scrivi test con Jest/Pytest",
+    "- Commenti in italiano, codice in inglese",
+    "- Suggerisci best practices per security e performance"
+  ],
+  
+  "claude.codeStyle": {
+    "language": "it",
+    "commentStyle": "descriptive",
+    "preferredPatterns": [
+      "async/await over promises",
+      "functional programming when appropriate",
+      "composition over inheritance"
+    ]
+  },
+  
+  "claude.shortcuts": {
+    "explainCode": "Spiega questo codice in italiano",
+    "fixBugs": "Trova e correggi potenziali bug",
+    "addTests": "Aggiungi test per questo codice",
+    "optimize": "Ottimizza questo codice per performance",
+    "security": "Analizza questo codice per vulnerabilità"
+  },
+  
+  "claude.filePatterns": {
+    "exclude": [
+      "**/node_modules/**",
+      "**/.git/**",
+      "**/dist/**",
+      "**/build/**",
+      "**/__pycache__/**",
+      "**/venv/**",
+      "**/.env",
+      "**/package-lock.json",
+      "**/yarn.lock"
+    ]
+  },
+  
+  "claude.features": {
+    "autoComplete": true,
+    "inlineChat": true,
+    "codeActions": true,
+    "gitIntegration": true
+  }
+}

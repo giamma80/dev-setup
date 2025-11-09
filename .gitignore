@@ -2,8 +2,9 @@
 *.log
 /tmp/*.log
 
-# Reports
+# Reports (exclude config files)
 *.json
+!configurations/*.json
 
 # Backup files
 *.bak
