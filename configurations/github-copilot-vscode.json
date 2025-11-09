@@ -1,164 +1,88 @@
-{{
-
-  "github.copilot.enable": {  "// GitHub Copilot Configuration": "Settings ottimizzate per VS Code",
-
-    "*": true,  
-
-    "yaml": true,  "github.copilot.enable": {
-
-    "plaintext": false,    "*": true,
-
-    "markdown": true,    "yaml": true,
-
-    "json": true,    "plaintext": false,
-
-    "jsonc": true    "markdown": true,
-
-  },    "json": true,
-
-  "github.copilot.editor.enableAutoCompletions": true,    "jsonc": true
-
-  "github.copilot.editor.enableCodeActions": true,  },
-
-  "editor.inlineSuggest.enabled": true,  
-
-  "editor.inlineSuggest.showToolbar": "onHover",  "github.copilot.editor.enableAutoCompletions": true,
-
-  "editor.quickSuggestions": {  
-
-    "other": true,  "github.copilot.editor.enableCodeActions": true,
-
-    "comments": true,  
-
-    "strings": true  "// Inline suggestions": "Configurazione suggerimenti",
-
-  },  "editor.inlineSuggest.enabled": true,
-
-  "editor.suggestOnTriggerCharacters": true,  "editor.inlineSuggest.showToolbar": "onHover",
-
-  "editor.acceptSuggestionOnCommitCharacter": true,  
-
-  "editor.acceptSuggestionOnEnter": "on",  "// Quick suggestions": "Suggerimenti rapidi",
-
-  "editor.tabCompletion": "on",  "editor.quickSuggestions": {
-
-  "github.copilot.chat.localeOverride": "it",    "other": true,
-
-  "github.copilot.chat.codeGeneration.instructions": [    "comments": true,
-
-    {    "strings": true
-
-      "text": "Full-stack developer con focus su: React/Next.js, Node.js, Python, Docker, AWS"  },
-
-    },  
-
-    {  "editor.suggestOnTriggerCharacters": true,
-
-      "text": "Preferenze: TypeScript, async/await, functional programming, test coverage"  "editor.acceptSuggestionOnCommitCharacter": true,
-
-    },  "editor.acceptSuggestionOnEnter": "on",
-
-    {  "editor.tabCompletion": "on",
-
-      "text": "Commenti e documentazione in italiano, codice in inglese"  
-
-    }  "// GitHub Copilot Chat": "Configurazione chat",
-
-  ],  "github.copilot.chat.localeOverride": "it",
-
-  "github.copilot.chat.welcomeMessage": "enabled",  "github.copilot.chat.codeGeneration.instructions": [
-
-  "files.exclude": {    {
-
-    "**/.git": true,      "text": "Full-stack developer con focus su: React/Next.js, Node.js, Python, Docker, AWS"
-
-    "**/.DS_Store": true,    },
-
-    "**/node_modules": true,    {
-
-    "**/__pycache__": true,      "text": "Preferenze: TypeScript, async/await, functional programming, test coverage"
-
-    "**/venv": true,    },
-
-    "**/*.pyc": true    {
-
-  },      "text": "Commenti e documentazione in italiano, codice in inglese"
-
-  "github.copilot.advanced": {    }
-
-    "debug.overrideEngine": "gpt-4",  ],
-
-    "length": "auto"  
-
-  },  "// Shortcuts personalizzati": "Comandi rapidi",
-
-  "editor.fontSize": 14,  "github.copilot.chat.welcomeMessage": "enabled",
-
-  "editor.fontFamily": "'Fira Code', 'JetBrains Mono', Menlo, Monaco, 'Courier New', monospace",  
-
-  "editor.fontLigatures": true,  "// File da escludere": "Pattern per file ignorati",
-
-  "editor.lineHeight": 22,  "files.exclude": {
-
-  "editor.renderWhitespace": "boundary",    "**/.git": true,
-
-  "editor.minimap.enabled": true,    "**/.DS_Store": true,
-
-  "editor.formatOnSave": true,    "**/node_modules": true,
-
-  "editor.formatOnPaste": true,    "**/__pycache__": true,
-
-  "editor.bracketPairColorization.enabled": true,    "**/venv": true,
-
-  "editor.guides.bracketPairs": true,    "**/*.pyc": true
-
-  "workbench.colorTheme": "GitHub Dark Default",  },
-
-  "workbench.iconTheme": "material-icon-theme",  
-
-  "workbench.startupEditor": "none",  "// Keybindings suggeriti": "Aggiungi a keybindings.json",
-
-  "terminal.integrated.fontSize": 13,  "// keybindings": [
-
-  "terminal.integrated.fontFamily": "'Fira Code', 'JetBrains Mono', monospace",  //   {
-
-  "terminal.integrated.defaultProfile.osx": "zsh"  //     "key": "cmd+i",
-
-}  //     "command": "github.copilot.inlineChat.start"
-
-  //   },
-  //   {
-  //     "key": "cmd+shift+i",
-  //     "command": "workbench.panel.chat.view.copilot.focus"
-  //   }
-  // ],
-  
-  "// Linguaggi prioritari": "Ottimizzazione per i tuoi stack",
-  "github.copilot.advanced": {
-    "debug.overrideEngine": "gpt-4",
-    "debug.overrideProxyUrl": "",
-    "length": "auto"
+{
+  "_comment": "Auto-generato da base-config.json - NON MODIFICARE MANUALMENTE",
+  "_generated_at": "2025-11-09T20:43:50.951Z",
+  "github.copilot.enable": {
+    "*": true,
+    "yaml": true,
+    "markdown": true,
+    "typescript": true,
+    "python": true,
+    "swift": true
   },
-  
-  "// Editor settings per miglior esperienza": "Configurazioni editor",
+  "github.copilot.editor.enableAutoCompletions": true,
+  "github.copilot.editor.enableCodeActions": true,
+  "editor.inlineSuggest.enabled": true,
+  "editor.inlineSuggest.showToolbar": "onHover",
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": true,
+    "strings": true
+  },
+  "editor.suggestOnTriggerCharacters": true,
+  "editor.acceptSuggestionOnCommitCharacter": true,
+  "editor.acceptSuggestionOnEnter": "on",
+  "editor.tabCompletion": "on",
+  "github.copilot.chat.localeOverride": "it",
+  "github.copilot.chat.codeGeneration.instructions": [
+    {
+      "text": "Tech Stack: React, React Native, Next.js, Node.js, Express, Supabase, PostgreSQL"
+    },
+    {
+      "text": "AI Params: Temperature 0.3 | Mode: coding | Verbosity: concise"
+    },
+    {
+      "text": "RULES: 1) MAX 25 lines/function 2) Patterns: Dependency Injection, Strategy Pattern, Factory Pattern 3) Tests ≥80% 4) Linting always"
+    },
+    {
+      "text": "Style: TypeScript strict | Async/await | Functional | Type hints | Composition over inheritance"
+    },
+    {
+      "text": "Output: Production-ready | Unit tests | Docs (it) | Security | Performance | Lint-free"
+    },
+    {
+      "text": "Language: Explanations IT | Code EN"
+    }
+  ],
+  "github.copilot.chat.welcomeMessage": "enabled",
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true,
+    "**/__pycache__": true,
+    "**/venv": true,
+    "**/*.pyc": true
+  },
+  "github.copilot.advanced": {
+    "temperature": 0.3,
+    "length": "medium"
+  },
   "editor.fontSize": 14,
-  "editor.fontFamily": "'Fira Code', 'JetBrains Mono', Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontFamily": "'Fira Code', 'JetBrains Mono', Menlo, monospace",
   "editor.fontLigatures": true,
   "editor.lineHeight": 22,
-  "editor.renderWhitespace": "boundary",
-  "editor.minimap.enabled": true,
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
   "editor.bracketPairColorization.enabled": true,
-  "editor.guides.bracketPairs": true,
-  
-  "// Workbench": "Preferenze interfaccia",
+  "editor.rulers": [
+    80,
+    120
+  ],
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": true,
+  "python.formatting.provider": "black",
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
   "workbench.colorTheme": "GitHub Dark Default",
   "workbench.iconTheme": "material-icon-theme",
-  "workbench.startupEditor": "none",
-  
-  "// Terminal integrato": "Configurazione terminale",
   "terminal.integrated.fontSize": 13,
-  "terminal.integrated.fontFamily": "'Fira Code', 'JetBrains Mono', monospace",
   "terminal.integrated.defaultProfile.osx": "zsh"
 }

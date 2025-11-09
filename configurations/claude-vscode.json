@@ -1,52 +1,52 @@
 {
-  "// Claude Code Configuration": "Ottimizzato per sviluppo full-stack con Git, Docker, Node, Python, AWS",
-  
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "_comment": "Auto-generato da base-config.json - NON MODIFICARE MANUALMENTE",
+  "_generated_at": "2025-11-09T20:43:50.951Z",
   "claude.apiKey": "YOUR_API_KEY_HERE",
-  
   "claude.modelId": "claude-sonnet-4-20250514",
-  
   "claude.maxTokens": 8192,
-  
+  "claude.temperature": 0.3,
   "claude.contextWindow": {
     "includeOpenFiles": true,
     "includeRecentFiles": true,
     "maxFiles": 20,
-    "includeGitChanges": true
+    "includeGitChanges": true,
+    "includeWorkspaceSymbols": true
   },
-  
   "claude.customInstructions": [
-    "Sono un full-stack developer che lavora con:",
-    "- Frontend: React, Next.js, TypeScript",
-    "- Backend: Node.js, Python, Docker",
-    "- Cloud: AWS, Vercel, Render",
-    "- Tools: Git, GitHub Actions, npm/pip",
+    "Sono un full-stack developer specializzato in:",
+    "- Frontend: React, React Native, Next.js, TypeScript, iOS",
+    "- Backend: Node.js, Python, FastAPI, NestJS",
+    "- Database: Supabase, PostgreSQL",
+    "- Infrastructure: Docker, Vercel, Render",
+    "- Automation: n8n",
+    "- VCS: GitHub, GitLab",
     "",
-    "Preferenze:",
-    "- Usa TypeScript quando possibile",
-    "- Segui ESLint/Prettier standards",
-    "- Scrivi test con Jest/Pytest",
-    "- Commenti in italiano, codice in inglese",
-    "- Suggerisci best practices per security e performance"
+    "REGOLE FONDAMENTALI:",
+    "1. Funzioni/metodi max 25 righe",
+    "2. Sempre applicare design patterns (DI, Strategy, CQRS, Business Delegate)",
+    "3. Evitare antipattern e code smell",
+    "4. Massimo riuso del codice",
+    "5. Sempre creare unit test (coverage >80%)",
+    "6. Sempre applicare linting (ESLint, Pylint, Black)",
+    "7. Documentazione in italiano, codice in inglese",
+    "8. Sicurezza e performance come priorità",
+    "",
+    "STILE DI CODICE:",
+    "- TypeScript preferito per JavaScript",
+    "- Async/await invece di promises",
+    "- Functional programming quando appropriato",
+    "- Composition over inheritance",
+    "- Immutabilità e pure functions",
+    "- Type hints per Python",
+    "",
+    "OUTPUT RICHIESTO:",
+    "- Codice production-ready",
+    "- Unit test inclusi",
+    "- Documentazione JSDoc/Docstring",
+    "- Best practices applicate",
+    "- Performance ottimizzate"
   ],
-  
-  "claude.codeStyle": {
-    "language": "it",
-    "commentStyle": "descriptive",
-    "preferredPatterns": [
-      "async/await over promises",
-      "functional programming when appropriate",
-      "composition over inheritance"
-    ]
-  },
-  
-  "claude.shortcuts": {
-    "explainCode": "Spiega questo codice in italiano",
-    "fixBugs": "Trova e correggi potenziali bug",
-    "addTests": "Aggiungi test per questo codice",
-    "optimize": "Ottimizza questo codice per performance",
-    "security": "Analizza questo codice per vulnerabilità"
-  },
-  
   "claude.filePatterns": {
     "exclude": [
       "**/node_modules/**",
@@ -55,16 +55,28 @@
       "**/build/**",
       "**/__pycache__/**",
       "**/venv/**",
+      "**/env/**",
       "**/.env",
+      "**/.env.local",
       "**/package-lock.json",
-      "**/yarn.lock"
+      "**/yarn.lock",
+      "**/pnpm-lock.yaml",
+      "**/.next/**",
+      "**/coverage/**",
+      "**/.pytest_cache/**",
+      "**/ios/Pods/**",
+      "**/android/.gradle/**",
+      "**/*.pyc",
+      "**/.DS_Store"
     ]
   },
-  
   "claude.features": {
     "autoComplete": true,
     "inlineChat": true,
     "codeActions": true,
-    "gitIntegration": true
+    "gitIntegration": true,
+    "testGeneration": true,
+    "refactoring": true,
+    "documentation": true
   }
 }

@@ -1,0 +1,368 @@
+{
+  "version": "1.0.0",
+  "description": "Configurazione centralizzata per AI Copilots - Full Stack Development",
+  
+  "ai_parameters": {
+    "temperature": 0.3,
+    "creativity_level": "balanced",
+    "verbosity": "concise",
+    "optimization_mode": "coding",
+    "explanation_language": "it",
+    "code_language": "en"
+  },
+  
+  "tech_stack": {
+    "frontend": [
+      "React",
+      "React Native",
+      "Next.js",
+      "TypeScript",
+      "Expo",
+      "React Navigation",
+      "React Query/TanStack Query",
+      "Zustand/Redux Toolkit"
+    ],
+    "backend": [
+      "Node.js",
+      "Express",
+      "Fastify",
+      "Python",
+      "FastAPI",
+      "Flask",
+      "NestJS"
+    ],
+    "mobile": [
+      "React Native",
+      "Expo",
+      "iOS Native (Swift)",
+      "React Native Paper",
+      "Reanimated"
+    ],
+    "database": [
+      "Supabase",
+      "PostgreSQL",
+      "MongoDB",
+      "Redis"
+    ],
+    "automation": [
+      "n8n",
+      "Workflows automation",
+      "Webhooks"
+    ],
+    "infrastructure": [
+      "Docker",
+      "Docker Compose",
+      "Vercel",
+      "Render",
+      "GitHub Actions",
+      "GitLab CI/CD"
+    ],
+    "tools": [
+      "Git",
+      "GitHub",
+      "GitLab",
+      "ESLint",
+      "Prettier",
+      "Jest",
+      "Pytest",
+      "Vitest"
+    ]
+  },
+  
+  "coding_standards": {
+    "general": {
+      "max_function_length": 25,
+      "max_method_length": 25,
+      "prefer_code_reuse": true,
+      "avoid_duplication": true,
+      "single_responsibility": true,
+      "descriptive_naming": true,
+      "comment_complex_logic": true
+    },
+    
+    "patterns": {
+      "required": [
+        "Dependency Injection",
+        "Strategy Pattern",
+        "Factory Pattern",
+        "Repository Pattern",
+        "CQRS (Command Query Responsibility Segregation)",
+        "Business Delegate Pattern"
+      ],
+      "prefer": [
+        "Composition over Inheritance",
+        "Interface Segregation",
+        "Immutability",
+        "Pure Functions",
+        "Async/Await over Promises"
+      ]
+    },
+    
+    "antipatterns_to_avoid": [
+      "God Objects",
+      "Long Methods (>25 lines)",
+      "Long Parameter Lists (>4 params)",
+      "Duplicate Code",
+      "Magic Numbers",
+      "Nested Conditionals (>3 levels)",
+      "Tight Coupling",
+      "Global State",
+      "Callback Hell"
+    ],
+    
+    "code_smells_to_fix": [
+      "Large Classes",
+      "Long Functions",
+      "Too Many Parameters",
+      "Duplicate Code",
+      "Dead Code",
+      "Speculative Generality",
+      "Feature Envy",
+      "Data Clumps",
+      "Primitive Obsession"
+    ]
+  },
+  
+  "quality_requirements": {
+    "linting": {
+      "required": true,
+      "tools": {
+        "javascript": ["ESLint", "Prettier"],
+        "typescript": ["ESLint", "Prettier"],
+        "python": ["Pylint", "Black", "Flake8", "mypy"],
+        "react": ["eslint-plugin-react", "eslint-plugin-react-hooks"]
+      },
+      "enforce_on_save": true,
+      "fail_on_warnings": false
+    },
+    
+    "testing": {
+      "required": true,
+      "coverage_threshold": 80,
+      "test_types": [
+        "Unit Tests (mandatory)",
+        "Integration Tests (recommended)",
+        "E2E Tests (for critical paths)"
+      ],
+      "frameworks": {
+        "javascript": ["Jest", "Vitest", "React Testing Library"],
+        "python": ["Pytest", "unittest"],
+        "react_native": ["Jest", "React Native Testing Library"]
+      },
+      "always_test": [
+        "Business Logic",
+        "API Endpoints",
+        "Data Transformations",
+        "Edge Cases",
+        "Error Handling"
+      ]
+    },
+    
+    "documentation": {
+      "required": true,
+      "formats": [
+        "JSDoc for functions/classes",
+        "Docstrings for Python",
+        "README.md for projects",
+        "API documentation",
+        "Architecture Decision Records (ADR)"
+      ],
+      "language": "it"
+    },
+    
+    "security": {
+      "mandatory_checks": [
+        "Input validation",
+        "SQL injection prevention",
+        "XSS prevention",
+        "CSRF tokens",
+        "Environment variables for secrets",
+        "Dependency vulnerability scanning",
+        "Authentication/Authorization checks"
+      ]
+    },
+    
+    "performance": {
+      "considerations": [
+        "Avoid N+1 queries",
+        "Use pagination",
+        "Implement caching",
+        "Optimize bundle size",
+        "Lazy loading",
+        "Code splitting",
+        "Database indexing",
+        "Memoization"
+      ]
+    }
+  },
+  
+  "best_practices": {
+    "react": [
+      "Use functional components with hooks",
+      "Implement proper error boundaries",
+      "Memoize expensive computations (useMemo, useCallback)",
+      "Avoid inline function definitions in render",
+      "Use React.memo for performance",
+      "Implement proper key props in lists",
+      "Extract custom hooks for reusable logic",
+      "Use TypeScript for type safety"
+    ],
+    
+    "react_native": [
+      "Use FlatList/SectionList for long lists",
+      "Optimize images (proper sizing, caching)",
+      "Implement proper navigation patterns",
+      "Handle keyboard properly",
+      "Use Reanimated for animations",
+      "Test on both iOS and Android",
+      "Handle offline scenarios",
+      "Implement proper error boundaries"
+    ],
+    
+    "ios_native": [
+      "Follow Apple HIG",
+      "Use SwiftUI when possible",
+      "Implement proper memory management",
+      "Handle app lifecycle properly",
+      "Use Combine for reactive programming",
+      "Implement proper error handling",
+      "Follow MVVM or Clean Architecture"
+    ],
+    
+    "node": [
+      "Use async/await",
+      "Implement proper error handling middleware",
+      "Use environment variables",
+      "Implement logging (Winston, Pino)",
+      "Use validation middleware (Joi, Zod)",
+      "Implement rate limiting",
+      "Use dependency injection",
+      "Follow REST/GraphQL best practices"
+    ],
+    
+    "python": [
+      "Follow PEP 8",
+      "Use type hints",
+      "Implement proper exception handling",
+      "Use context managers",
+      "Prefer list comprehensions",
+      "Use dataclasses/Pydantic",
+      "Implement proper logging",
+      "Use virtual environments"
+    ],
+    
+    "docker": [
+      "Use multi-stage builds",
+      "Minimize layers",
+      "Use .dockerignore",
+      "Don't run as root",
+      "Use specific image tags",
+      "Implement health checks",
+      "Optimize image size",
+      "Use docker-compose for local dev"
+    ],
+    
+    "supabase": [
+      "Use Row Level Security (RLS)",
+      "Implement proper indexes",
+      "Use stored procedures for complex logic",
+      "Handle real-time subscriptions properly",
+      "Implement proper authentication",
+      "Use Edge Functions for serverless",
+      "Optimize queries",
+      "Handle connection pooling"
+    ],
+    
+    "n8n": [
+      "Use credentials manager",
+      "Implement error handling workflows",
+      "Use webhooks efficiently",
+      "Implement proper logging",
+      "Version control workflows (JSON export)",
+      "Use environment variables",
+      "Implement retry logic",
+      "Document workflow purpose"
+    ],
+    
+    "vercel_render": [
+      "Use environment variables",
+      "Implement proper caching",
+      "Use CDN for static assets",
+      "Implement monitoring",
+      "Use preview deployments",
+      "Configure proper redirects",
+      "Optimize build process",
+      "Implement proper CI/CD"
+    ],
+    
+    "git": [
+      "Write meaningful commit messages",
+      "Use conventional commits",
+      "Keep commits atomic",
+      "Use feature branches",
+      "Implement PR reviews",
+      "Write descriptive PR descriptions",
+      "Use .gitignore properly",
+      "Tag releases properly"
+    ]
+  },
+  
+  "file_patterns": {
+    "exclude": [
+      "**/node_modules/**",
+      "**/.git/**",
+      "**/dist/**",
+      "**/build/**",
+      "**/__pycache__/**",
+      "**/venv/**",
+      "**/env/**",
+      "**/.env",
+      "**/.env.local",
+      "**/package-lock.json",
+      "**/yarn.lock",
+      "**/pnpm-lock.yaml",
+      "**/.next/**",
+      "**/coverage/**",
+      "**/.pytest_cache/**",
+      "**/ios/Pods/**",
+      "**/android/.gradle/**",
+      "**/*.pyc",
+      "**/.DS_Store"
+    ]
+  },
+  
+  "custom_instructions_template": [
+    "Sono un full-stack developer specializzato in:",
+    "- Frontend: React, React Native, Next.js, TypeScript, iOS",
+    "- Backend: Node.js, Python, FastAPI, NestJS",
+    "- Database: Supabase, PostgreSQL",
+    "- Infrastructure: Docker, Vercel, Render",
+    "- Automation: n8n",
+    "- VCS: GitHub, GitLab",
+    "",
+    "REGOLE FONDAMENTALI:",
+    "1. Funzioni/metodi max 25 righe",
+    "2. Sempre applicare design patterns (DI, Strategy, CQRS, Business Delegate)",
+    "3. Evitare antipattern e code smell",
+    "4. Massimo riuso del codice",
+    "5. Sempre creare unit test (coverage >80%)",
+    "6. Sempre applicare linting (ESLint, Pylint, Black)",
+    "7. Documentazione in italiano, codice in inglese",
+    "8. Sicurezza e performance come priorità",
+    "",
+    "STILE DI CODICE:",
+    "- TypeScript preferito per JavaScript",
+    "- Async/await invece di promises",
+    "- Functional programming quando appropriato",
+    "- Composition over inheritance",
+    "- Immutabilità e pure functions",
+    "- Type hints per Python",
+    "",
+    "OUTPUT RICHIESTO:",
+    "- Codice production-ready",
+    "- Unit test inclusi",
+    "- Documentazione JSDoc/Docstring",
+    "- Best practices applicate",
+    "- Performance ottimizzate"
+  ]
+}
