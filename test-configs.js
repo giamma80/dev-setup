@@ -65,7 +65,7 @@ function testFileExistence() {
     'claude-vscode.json',
     'claude-cli-config.json',
     'github-copilot-vscode.json',
-    'warp-config.md',
+    'WARP.md',
     'README.md'
   ];
   
