@@ -1,194 +1,491 @@
 # 🤖 AI Copilot Configurations
 
-> Configurazioni centralizzate e ottimizzate per sviluppo full-stack professionale
+> Sistema centralizzato di configurazioni AI per sviluppo full-stack professionale
 
-## 🎯 Specializzazioni
-
-- **Frontend**: React, React Native, Next.js, TypeScript
-- **Mobile**: React Native, Expo, iOS (Swift)
-- **Backend**: Node.js, Python (FastAPI, Flask), NestJS
-- **Database**: Supabase, PostgreSQL, MongoDB, Redis
-- **Infrastructure**: Docker, Vercel, Render
-- **DevOps**: GitHub Actions, GitLab CI/CD
-- **Automation**: n8n workflows
+[![Tech Stack](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
 
 ---
 
-## 📁 Struttura File
+## 📑 Indice
 
-### 1. **base-config.json** ⭐
-**Configurazione centralizzata e fonte di verità**
-
-Contiene:
-- 🎛️ Parametri AI (temperature: 0.3, creativity, verbosity, mode)
-- 🛠️ Tech stack completo
-- 📏 Coding standards (max 25 righe/funzione, no duplicati)
-- 🎨 Design patterns (DI, Strategy, CQRS, Business Delegate)
-- 🚫 Antipatterns da evitare
-- ✅ Quality requirements (linting, testing ≥80%, documentation)
-- 🔒 Security best practices
-- ⚡ Performance considerations
-- 📚 Best practices per ogni tecnologia
-
-### 2. **INSTRUCTIONS.md** 📋
-**Istruzioni complete da copiare nei copilot**
-
-Formato markdown ready-to-copy per:
-- Claude Code custom instructions
-- GitHub Copilot chat instructions
-- Warp AI context
-
-### 3. **claude-vscode.json**
-Configurazione Claude Code per VS Code
-- Extends base-config.json
-- Temperature 0.3
-- Context window avanzato
-- Custom instructions dettagliate
-- File patterns ottimizzati
-
-### 4. **github-copilot-vscode.json**
-Settings GitHub Copilot per VS Code
-- Temperature 0.3
-- Chat in italiano
-- Editor settings ottimizzati
-- Linting e formatting automatici
-
-### 5. **warp-config.md**
-Guida completa Warp Terminal
-- 40+ workflows predefiniti
-- Comandi per tutto lo stack
-- Alias shell produttivi
-- Warp AI prompts
+1. [Quick Start](#-quick-start)
+2. [Struttura File](#-struttura-file)
+3. [Setup AI Copilots](#-setup-ai-copilots)
+4. [Come Modificare Configurazioni](#-come-modificare-configurazioni)
+5. [Regole e Best Practices](#-regole-e-best-practices)
+6. [Tech Stack](#-tech-stack)
+7. [Troubleshooting](#-troubleshooting)
 
 ---
 
 ## 🚀 Quick Start
 
-### 1. Modifica la Configurazione Base (UNICO FILE DA MODIFICARE)
+### 1. Modifica la Configurazione Base
 ```bash
-cd ~/scripts
+cd ~/scripts/configurations
+vim base-config.json  # ← UNICO FILE DA MODIFICARE
+```
+
+### 2. Rigenera Tutto Automaticamente
+```bash
+node ../sync-configs.js
+```
+
+### 3. Applica nei Copilot
+Segui le istruzioni in [Setup AI Copilots](#-setup-ai-copilots)
+
+---
+
+## 📁 Struttura File
+
+### 📄 File Principali
+
+| File | Descrizione | Modificabile |
+|------|-------------|--------------|
+| **`base-config.json`** ⭐ | Single source of truth - configurazione centralizzata | ✅ SÌ |
+| `claude-vscode.json` | Config Claude per VS Code | ❌ Auto-generato |
+| `claude-cli-config.json` | Config Claude CLI (terminale) | ❌ Auto-generato |
+| `github-copilot-vscode.json` | Config GitHub Copilot per VS Code | ❌ Auto-generato |
+| `INSTRUCTIONS.md` | Istruzioni copy-paste per AI | ❌ Auto-generato |
+| `warp-config.md` | Workflows Warp Terminal | ✅ Manuale |
+
+### 🎯 base-config.json - Cosa Contiene
+
+```json
+{
+  "ai_parameters": {
+    "temperature": 0.3,           // Precisione vs creatività
+    "creativity_level": "balanced",
+    "verbosity": "concise",
+    "optimization_mode": "coding"
+  },
+  
+  "tech_stack": {
+    "frontend": { /* React, Next.js, UI libs */ },
+    "backend": { /* Node, Python, constraints */ },
+    "mobile": { /* React Native, UI libs */ },
+    "python_advanced": { /* ML, async, ORM */ }
+  },
+  
+  "coding_standards": {
+    "max_function_length": 25,    // Linee massime per funzione
+    "patterns": { /* DI, Strategy, CQRS */ }
+  },
+  
+  "golden_rules": [ /* KISS, YAGNI, Measure First */ ],
+  "warnings": [ /* Security, Performance, Accessibility */ ],
+  "compatibility": { /* Node 18+, Python 3.10+ */ }
+}
+```
+
+---
+
+## �️ Setup AI Copilots
+
+### 1️⃣ Claude Code (VS Code Extension)
+
+1. **Installa estensione**: `Claude Dev` in VS Code
+2. **Copia configurazione**:
+   ```bash
+   # Apri il file generato
+   cat configurations/claude-vscode.json
+   ```
+3. **Applica in VS Code**:
+   - `Cmd+,` → Settings
+   - Cerca "Claude"
+   - Incolla le custom instructions
+   - Imposta temperature: `0.3`
+
+### 2️⃣ Claude Code (CLI Terminal)
+
+1. **Installa Claude CLI**:
+   ```bash
+   # Installazione (se disponibile)
+   npm install -g @anthropic-ai/claude-cli
+   # oppure
+   brew install claude-cli
+   ```
+
+2. **Setup configurazione**:
+   ```bash
+   # Crea directory config
+   mkdir -p ~/.config/claude
+   
+   # Copia config generata
+   cp configurations/claude-cli-config.json ~/.config/claude/config.json
+   ```
+
+3. **Setup API Key**:
+   ```bash
+   # Metodo 1: Environment variable
+   export ANTHROPIC_API_KEY="your-api-key"
+   
+   # Metodo 2: Config file
+   echo '{"api_key": "your-api-key"}' > ~/.config/claude/credentials.json
+   ```
+
+4. **Test**:
+   ```bash
+   claude chat
+   claude ask "Come ottimizzare questa query?"
+   ```
+
+### 3️⃣ GitHub Copilot (VS Code)
+
+1. **Apri file generato**:
+   ```bash
+   cat configurations/github-copilot-vscode.json
+   ```
+2. **Applica in VS Code**:
+   - `Cmd+,` → Settings
+   - Cerca "GitHub Copilot"
+   - Copia le impostazioni nel tuo `settings.json`
+
+### 4️⃣ Warp Terminal
+
+1. **Leggi workflows**:
+   ```bash
+   cat configurations/warp-config.md
+   ```
+2. **Applica workflows** manualmente (non auto-generato)
+
+---
+
+## � Come Modificare Configurazioni
+
+### Modifiche Comuni
+
+#### 1. Cambiare Temperature (Precisione vs Creatività)
+```json
+{
+  "ai_parameters": {
+    "temperature": 0.3  // ← 0.1-0.3: preciso | 0.4-0.6: bilanciato | 0.7-0.9: creativo
+  }
+}
+```
+
+#### 2. Aggiungere Libreria con Meta-campi
+```json
+{
+  "tech_stack": {
+    "frontend": {
+      "ui_libraries": {
+        "design_systems": [
+          {
+            "name": "Chakra UI",
+            "priority": "prefer",              // must | prefer | avoid
+            "rationale": "API semplice, a11y", // Perché consigliata
+            "constraints": "React 18+"         // Requisiti versione
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+#### 3. Modificare Limiti Codice
+```json
+{
+  "coding_standards": {
+    "general": {
+      "max_function_length": 25,  // ← Modifica qui (default: 25)
+      "max_method_length": 25
+    }
+  }
+}
+```
+
+#### 4. Aggiungere Design Pattern
+```json
+{
+  "coding_standards": {
+    "patterns": {
+      "required": [
+        "Dependency Injection",
+        "Observer Pattern"  // ← Aggiungi qui
+      ]
+    }
+  }
+}
+```
+
+#### 5. Aggiungere Golden Rule
+```json
+{
+  "golden_rules": [
+    {
+      "rule": "Test First",
+      "rationale": "TDD previene bug",
+      "priority": "prefer",
+      "example": "Scrivi test prima dell'implementazione"
+    }
+  ]
+}
+```
+
+#### 6. Aggiungere Warning
+```json
+{
+  "warnings": [
+    {
+      "category": "performance",
+      "warning": "Evita N+1 queries",
+      "rationale": "Performance degradation",
+      "mitigation": "Usa JOIN o eager loading"
+    }
+  ]
+}
+```
+
+### Workflow Completo
+```bash
+# 1. Modifica base-config.json
 vim configurations/base-config.json
-```
 
-**base-config.json** è la **fonte di verità unica**. Contiene:
-- Parametri AI (temperature, creativity, verbosity)
-- Tech stack completo
-- Coding standards e regole
-- Design patterns
-- Best practices per ogni tecnologia
-
-### 2. Sincronizza le Configurazioni (AUTOMATICO)
-```bash
+# 2. Rigenera configurazioni
 node sync-configs.js
-```
 
-Questo script **genera automaticamente**:
-- ✅ `configurations/INSTRUCTIONS.md` (istruzioni copy-paste)
-- ✅ `configurations/claude-vscode.json` (config Claude Code)
-- ✅ `configurations/github-copilot-vscode.json` (config GitHub Copilot)
-
-### 3. Applica le Configurazioni nei Copilot
-
-#### Claude Code (VS Code)
-```bash
-# Le istruzioni sono già nel file generato
+# 3. Verifica output
 cat configurations/claude-vscode.json
-# Copia nel tuo settings.json di VS Code
+cat configurations/INSTRUCTIONS.md
+
+# 4. Commit
+git add . && git commit -m "feat: add new library XYZ to tech stack"
+git push
 ```
 
-#### GitHub Copilot (VS Code)
-```bash
-# Le istruzioni sono già nel file generato
-cat configurations/github-copilot-vscode.json
-# Copia nel tuo settings.json di VS Code
-```
-
-#### Warp Terminal
-```bash
-# Leggi e applica workflows
-cat configurations/warp-config.md
-```
+### ⚠️ Checklist Pre-Commit
+- [ ] JSON valido: `jq . configurations/base-config.json`
+- [ ] Rigenerato: `node sync-configs.js`
+- [ ] File generati verificati
+- [ ] Commit message descrittivo
 
 ---
 
-## 🔄 Workflow di Aggiornamento
-
-```bash
-# 1. Modifica SOLO base-config.json
-vim configurations/base-config.json
-
-# 2. Rigenera tutto automaticamente
-node sync-configs.js
-
-# 3. Commit e push
-git add . && git commit -m "Update AI configurations" && git push
-```
-
-**Importante**: NON modificare manualmente:
-- ❌ `claude-vscode.json`
-- ❌ `github-copilot-vscode.json`
-- ❌ `INSTRUCTIONS.md`
-
-Questi file sono **auto-generati** da `base-config.json`.
-
----
-
-## 📖 Regole Fondamentali
+## 📖 Regole e Best Practices
 
 ### 🎯 Parametri AI
-- **Temperature**: 0.3 (precisione su velocità)
-- **Modalità**: CODING (non filosofico)
-- **Verbosità**: Concisa
-- **Creatività**: Bilanciata e pragmatica
+- **Temperature**: `0.3` (precisione > creatività)
+- **Mode**: `CODING` (pragmatico, non filosofico)
+- **Verbosity**: `CONCISE` (risposte brevi e mirate)
+- **Language**: Codice in inglese, spiegazioni in italiano
 
-### ⚠️ Regole Assolute
+### ⚠️ Regole Assolute (NON NEGOZIABILI)
 
-1. **MAX 25 righe** per funzione/metodo (NON NEGOZIABILE)
-2. **Design Patterns** sempre:
-   - Dependency Injection
-   - Strategy Pattern  
-   - CQRS
-   - Business Delegate
-   - Repository Pattern
+1. **MAX 25 righe** per funzione/metodo
+2. **Design Patterns obbligatori**:
+   - Dependency Injection (sempre)
+   - Strategy Pattern (algoritmi variabili)
+   - CQRS (separazione comando/query)
+   - Business Delegate (separazione logica)
+   - Repository Pattern (astrazione dati)
 3. **ZERO tolleranza**:
    - God Objects
    - Codice duplicato
    - Magic numbers
    - Nested conditionals >3 livelli
    - Funzioni >4 parametri
+   - Callback hell
 4. **Testing obbligatorio**: Coverage ≥80%
-5. **Linting attivo**: ESLint, Prettier, Pylint, Black
+5. **Linting sempre attivo**: Fail su errori, warning ok
 
-### 💎 Best Practices per Stack
+### 🎯 Golden Rules
 
-- **React/RN**: Functional components, hooks, custom hooks, memoization
-- **Node.js**: DI, middleware, Zod validation, Pino logging
-- **Python**: PEP 8, type hints, Pydantic, dataclasses
-- **Supabase**: RLS sempre, stored procedures, indexes
-- **Docker**: Multi-stage, non-root, health checks
-- **n8n**: Error workflows, credentials, retry logic
+| Rule | Priority | Rationale |
+|------|----------|-----------|
+| **KISS** | must | Keep It Simple - no complessità inutile |
+| **YAGNI** | must | You Aren't Gonna Need It - no feature speculative |
+| **Measure Before Optimize** | must | Profila prima di ottimizzare |
+| **Fail Fast, Recover Gracefully** | must | Errori evidenti in dev, rollback in prod |
+| **Single Source of Truth** | must | Config centralizzata, no duplicazione |
+| **API First** | prefer | Contratti prima dell'implementazione |
+| **Automate Quality Gates** | must | Lint/test devono bloccare merge |
+| **Small PRs** | prefer | Max 400 righe, atomic commits |
+| **Security by Design** | must | Threat modeling, input validation |
+| **Observability by Default** | must | Metrics, traces, logs, runbooks |
+
+### 💎 Best Practices per Tecnologia
+
+<details>
+<summary><strong>React / React Native</strong></summary>
+
+- Solo functional components + hooks
+- useMemo/useCallback per performance
+- Custom hooks per logica riusabile
+- Error boundaries sempre
+- TypeScript strict mode
+- FlatList per liste lunghe (RN)
+- Reanimated per animazioni (RN)
+</details>
+
+<details>
+<summary><strong>Node.js / Express / Fastify</strong></summary>
+
+- Dependency injection (tsyringe, InversifyJS)
+- Middleware per error handling
+- Validation (Zod, Joi) sempre
+- Logging strutturato (Pino, Winston)
+- Rate limiting su API
+- Health checks endpoint
+</details>
+
+<details>
+<summary><strong>Python / FastAPI / Flask</strong></summary>
+
+- PEP 8 strict
+- Type hints completi
+- Pydantic per validazione
+- Context managers per risorse
+- Dataclasses per strutture dati
+- FastAPI preferred su Flask
+</details>
+
+<details>
+<summary><strong>Supabase / PostgreSQL</strong></summary>
+
+- Row Level Security (RLS) sempre
+- Stored procedures per logica complessa
+- Indexes ottimizzati
+- Edge Functions per serverless
+- Connection pooling
+</details>
+
+<details>
+<summary><strong>Docker</strong></summary>
+
+- Multi-stage builds
+- Non-root user
+- .dockerignore completo
+- Health checks
+- Layer optimization
+- Specific image tags (no :latest)
+</details>
+
+### ⚠️ Warnings - Cose da NON Fare
+
+| Categoria | Warning | Mitigation |
+|-----------|---------|------------|
+| **Security** | Mai `curl \| sh` | Verifica checksum/signature |
+| **Dependencies** | Pinna con lockfile | Commit package-lock.json, poetry.lock |
+| **Secrets** | MAI commit .env | Usa secret manager (Vault, GitHub Secrets) |
+| **Database** | RLS & least-privilege | Test privilege escalation |
+| **API** | Rate limiting sempre | express-rate-limit, FastAPI Slowapi |
+| **Performance** | Bundle size budgets | Lighthouse CI, webpack-bundle-analyzer |
+| **Accessibility** | WCAG compliance | axe-core, eslint-plugin-jsx-a11y |
+| **Privacy** | No PII in logs | Anonimizza dati sensibili |
 
 ---
 
-## 📝 Manutenzione
+## �️ Tech Stack
 
-Per aggiornare le configurazioni:
+### Frontend
+- **Core**: React 18+, Next.js, TypeScript 5+
+- **Design Systems**: Chakra UI [prefer], Mantine [prefer], Ant Design [must]
+- **Headless**: Radix UI [must], Headless UI [prefer]
+- **Styling**: Tailwind CSS [must], Emotion [prefer]
+- **Forms**: React Hook Form [must], Zod [must], ~~Formik [avoid]~~
+- **Charts**: Recharts [prefer], Visx [must]
+- **Animation**: Framer Motion [must]
+
+### Mobile
+- **Core**: React Native 0.70+, Expo
+- **UI**: React Native Paper [must], NativeBase [prefer]
+- **Gestures**: react-native-gesture-handler [must], Reanimated [must]
+- **Performance**: react-native-fast-image [must], MMKV [prefer]
+
+### Backend
+- **Node.js**: 18.0.0+ (rec: 22.x LTS)
+- **Python**: 3.10+ (rec: 3.12)
+- **Frameworks**: Express, Fastify, FastAPI, NestJS
+- **Python Advanced**: SQLModel, HTTPX, Strawberry GraphQL
+
+### Database & Infrastructure
+- **Database**: Supabase, PostgreSQL, MongoDB, Redis
+- **Infra**: Docker, Vercel, Render
+- **DevOps**: GitHub Actions, GitLab CI/CD
+- **Automation**: n8n workflows
+
+### ML / AI / Data
+- **ML**: PyTorch, Transformers (Hugging Face)
+- **LLM**: LangChain, sentence-transformers
+- **Data**: Polars [prefer], Dask [prefer]
+- **Orchestration**: Prefect [prefer], Dagster [prefer]
+
+### Observability
+- **Logging**: structlog [must], Pino
+- **Monitoring**: OpenTelemetry [must], Sentry [must]
+- **Testing**: pytest [must], Jest, Vitest
+
+---
+
+## 🐛 Troubleshooting
+
+### Errore: `sync-configs.js` fallisce
 
 ```bash
-cd ~/scripts/configurations
-git pull
+# Valida JSON
+jq . configurations/base-config.json
+
+# Se errore di sintassi, correggi base-config.json
+# Poi rigenera
+node sync-configs.js
 ```
 
-Per contribuire miglioramenti:
-1. Modifica i file
-2. Testa le configurazioni
-3. Commit e push
+### Le modifiche non si applicano in VS Code
+
+```bash
+# Rigenera
+node sync-configs.js
+
+# Ricarica VS Code
+# Cmd+Shift+P → "Developer: Reload Window"
+```
+
+### Claude CLI non trova config
+
+```bash
+# Verifica path
+ls -la ~/.config/claude/config.json
+
+# Se non esiste, copia
+mkdir -p ~/.config/claude
+cp configurations/claude-cli-config.json ~/.config/claude/config.json
+```
+
+### API Key Claude non valida
+
+```bash
+# Test connessione
+claude test-connection
+
+# Verifica env var
+echo $ANTHROPIC_API_KEY
+
+# O aggiungi in credentials.json
+echo '{"api_key": "sk-ant-..."}' > ~/.config/claude/credentials.json
+```
 
 ---
 
 ## 🔗 Risorse
 
-- [Claude Code Docs](https://claude.ai/docs)
-- [GitHub Copilot Docs](https://docs.github.com/copilot)
-- [Warp Docs](https://docs.warp.dev/)
-- [VS Code Settings Reference](https://code.visualstudio.com/docs/getstarted/settings)
+- 📚 [Claude Sonnet 4.5 Best Practices](https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/claude-4-best-practices)
+- 🤖 [GitHub Copilot Docs](https://docs.github.com/copilot)
+- ⚡ [Warp Terminal Docs](https://docs.warp.dev/)
+- 🔧 [VS Code Settings Reference](https://code.visualstudio.com/docs/getstarted/settings)
+
+---
+
+## 📊 Change Log
+
+- **v1.2.0** (2025-11-09): Meta-campi (priority/rationale/constraints), golden rules, warnings
+- **v1.1.0** (2025-11-09): Claude Sonnet 4.5 upgrade con best practices ufficiali
+- **v1.0.0** (2025-11-08): Configurazione centralizzata con sync-configs.js
+
+---
+
+**Auto-generato da `base-config.json` | Ultima sync: `node sync-configs.js`**

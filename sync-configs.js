@@ -69,122 +69,7 @@ function formatTechStackSection(section, title) {
 }
 
 // ============================================
-// 1. GENERA INSTRUCTIONS.md
-// ============================================
-function generateInstructions() {
-  const instructions = baseConfig.custom_instructions_template.join('\n');
-  
-  // Formatta tech stack
-  let techStackSections = '';
-  
-  if (baseConfig.tech_stack.frontend) {
-    techStackSections += formatTechStackSection(baseConfig.tech_stack.frontend, 'Frontend');
-  }
-  if (baseConfig.tech_stack.backend) {
-    techStackSections += formatTechStackSection(baseConfig.tech_stack.backend, 'Backend');
-  }
-  if (baseConfig.tech_stack.mobile) {
-    techStackSections += formatTechStackSection(baseConfig.tech_stack.mobile, 'Mobile');
-  }
-  if (baseConfig.tech_stack.python_advanced) {
-    techStackSections += formatTechStackSection(baseConfig.tech_stack.python_advanced, 'Python Advanced');
-  }
-  if (baseConfig.tech_stack.database) {
-    techStackSections += formatTechStackSection(baseConfig.tech_stack.database, 'Database');
-  }
-  if (baseConfig.tech_stack.infrastructure) {
-    techStackSections += formatTechStackSection(baseConfig.tech_stack.infrastructure, 'Infrastructure');
-  }
-  
-  const content = `# 📋 Istruzioni Custom per AI Copilots
-
-> Da copiare manualmente nelle impostazioni di ciascun copilot
-> **Auto-generato da base-config.json**
-
----
-
-## 🎯 Istruzioni Complete
-
-\`\`\`markdown
-${instructions}
-\`\`\`
-
----
-
-## 🔧 Come Applicare
-
-### Claude Code (VS Code)
-1. Apri Settings (Cmd+,)
-2. Cerca "Claude Custom Instructions"
-3. Incolla le istruzioni sopra
-4. Imposta temperature: ${baseConfig.ai_parameters.temperature}
-
-### GitHub Copilot (VS Code)
-1. Apri Command Palette (Cmd+Shift+P)
-2. Cerca "GitHub Copilot: Edit Instructions"
-3. Incolla la versione compatta delle istruzioni
-4. Salva
-
-### Warp AI
-1. Apri Warp
-2. Usa \`Ctrl+Shift+R\` per AI
-3. Nelle impostazioni AI, aggiungi context personalizzato
-
----
-
-## 📊 Parametri AI
-
-- **Temperature**: ${baseConfig.ai_parameters.temperature}
-- **Creativity**: ${baseConfig.ai_parameters.creativity_level}
-- **Verbosity**: ${baseConfig.ai_parameters.verbosity}
-- **Mode**: ${baseConfig.ai_parameters.optimization_mode}
-
----
-
-## 🛠️ Tech Stack
-
-${techStackSections}
-
----
-
-## 📏 Coding Standards
-
-### General
-- Max function length: ${baseConfig.coding_standards.general.max_function_length} lines
-- Max method length: ${baseConfig.coding_standards.general.max_method_length} lines
-- Prefer code reuse: ${baseConfig.coding_standards.general.prefer_code_reuse}
-- Single responsibility: ${baseConfig.coding_standards.general.single_responsibility}
-
-### Required Patterns
-${baseConfig.coding_standards.patterns.required.map(p => `- ${p}`).join('\n')}
-
-### Antipatterns to Avoid
-${baseConfig.coding_standards.antipatterns_to_avoid.map(a => `- ${a}`).join('\n')}
-
----
-
-## 🎯 Golden Rules
-
-${baseConfig.golden_rules ? baseConfig.golden_rules.map(r => `### ${r.rule}\n**Priority**: ${r.priority} | **Rationale**: ${r.rationale}\n`).join('\n') : ''}
-
----
-
-## ⚠️ Warnings & Best Practices
-
-${baseConfig.warnings ? baseConfig.warnings.map(w => `**[${w.category}]** ${w.warning}\n- Rationale: ${w.rationale}\n- Mitigation: ${w.mitigation}\n`).join('\n') : ''}
-
----
-
-**Ultima sincronizzazione**: ${new Date().toISOString()}
-`;
-
-  const filePath = path.join(CONFIG_DIR, 'INSTRUCTIONS.md');
-  fs.writeFileSync(filePath, content, 'utf8');
-  console.log('✅ INSTRUCTIONS.md generato');
-}
-
-// ============================================
-// 2. GENERA claude-vscode.json
+// 1. GENERA claude-vscode.json
 // ============================================
 function generateClaudeConfig() {
   const config = {
@@ -225,6 +110,85 @@ function generateClaudeConfig() {
   const filePath = path.join(CONFIG_DIR, 'claude-vscode.json');
   fs.writeFileSync(filePath, JSON.stringify(config, null, 2), 'utf8');
   console.log('✅ claude-vscode.json generato');
+}
+
+// ============================================
+// 2. GENERA claude-cli-config.json
+// ============================================
+function generateClaudeCLIConfig() {
+  // Versione compatta delle istruzioni per CLI
+  const compactInstructions = [
+    "=== MODEL IDENTITY ===",
+    "You are Claude Sonnet 4.5 (claude-sonnet-4-5-20250929), created by Anthropic.",
+    "Current model: Claude Sonnet 4.5",
+    "",
+    "=== DEVELOPER PROFILE ===",
+    "Full-stack developer specializzato in:",
+    "• Frontend: React, React Native, Next.js, TypeScript, iOS (Swift)",
+    "• Backend: Node.js (Express, Fastify, NestJS), Python (FastAPI, Flask)",
+    "• Database: Supabase, PostgreSQL, MongoDB, Redis",
+    "• Infrastructure: Docker, Vercel, Render, GitHub Actions, GitLab CI",
+    "• Automation: n8n workflows",
+    "• Mobile: React Native, Expo, iOS Native",
+    "",
+    "=== CODING RULES (ABSOLUTE) ===",
+    "1. ⚠️ MAX 25 RIGHE per funzione/metodo (NON NEGOZIABILE)",
+    "2. 🎯 Design Patterns OBBLIGATORI: DI, Strategy, CQRS, Business Delegate, Repository",
+    "3. 🚫 ZERO TOLLERANZA: God Objects, codice duplicato, magic numbers, nested conditionals >3",
+    "4. ✅ Testing OBBLIGATORIO: Unit test per business logic, coverage ≥80%",
+    "5. 🔍 Linting SEMPRE ATTIVO: ESLint+Prettier (JS/TS), Pylint+Black (Python)",
+    "",
+    "=== GOLDEN RULES ===",
+    baseConfig.golden_rules ? baseConfig.golden_rules.slice(0, 7).map(r => `• ${r.rule}`).join('\n') : 
+    "• KISS: Keep It Simple\n• YAGNI: You Aren't Gonna Need It\n• Measure Before Optimize\n• Fail Fast, Recover Gracefully\n• Single Source of Truth\n• Security by Design\n• Observability by Default",
+    "",
+    "=== OUTPUT ===",
+    `• Codice: ${baseConfig.ai_parameters.code_language.toUpperCase()} | Spiegazioni: ${baseConfig.ai_parameters.explanation_language.toUpperCase()}`,
+    "• Production-ready + unit tests + docs",
+    "• Lint-free, type-safe, secure",
+    "• Soluzione generale, NON hard-coded"
+  ];
+
+  const config = {
+    "_comment": "Auto-generato da base-config.json - NON MODIFICARE MANUALMENTE",
+    "_generated_at": new Date().toISOString(),
+    "_usage": "Copia questo file in ~/.config/claude/config.json oppure usa come .claude nel progetto",
+    
+    "model": "claude-sonnet-4-5-20250929",
+    "temperature": baseConfig.ai_parameters.temperature,
+    "max_tokens": 8192,
+    
+    "custom_instructions": compactInstructions,
+    
+    "context": {
+      "include_git_diff": true,
+      "include_open_files": true,
+      "max_context_tokens": 100000,
+      "watch_files": [
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.js",
+        "**/*.jsx",
+        "**/*.py",
+        "**/*.swift",
+        "**/*.json",
+        "**/*.md"
+      ]
+    },
+    
+    "exclude_patterns": baseConfig.file_patterns.exclude,
+    
+    "features": {
+      "auto_commit": false,
+      "interactive_mode": true,
+      "verbose": false,
+      "color_output": true
+    }
+  };
+
+  const filePath = path.join(CONFIG_DIR, 'claude-cli-config.json');
+  fs.writeFileSync(filePath, JSON.stringify(config, null, 2), 'utf8');
+  console.log('✅ claude-cli-config.json generato');
 }
 
 // ============================================
@@ -345,16 +309,17 @@ function generateGitHubCopilotConfig() {
 // MAIN
 // ============================================
 try {
-  generateInstructions();
   generateClaudeConfig();
+  generateClaudeCLIConfig();
   generateGitHubCopilotConfig();
   
   console.log('\n✨ Sincronizzazione completata!');
   console.log('\n📝 File generati:');
-  console.log('  - configurations/INSTRUCTIONS.md');
-  console.log('  - configurations/claude-vscode.json');
+  console.log('  - configurations/claude-vscode.json (VS Code extension)');
+  console.log('  - configurations/claude-cli-config.json (CLI terminal)');
   console.log('  - configurations/github-copilot-vscode.json');
-  console.log('\n💡 Modifica solo base-config.json e riesegui questo script.\n');
+  console.log('\n📖 Documentazione: configurations/README.md');
+  console.log('💡 Modifica solo base-config.json e riesegui questo script.\n');
   
 } catch (error) {
   console.error('❌ Errore durante la sincronizzazione:', error.message);
