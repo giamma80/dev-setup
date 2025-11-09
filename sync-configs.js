@@ -4,9 +4,11 @@
  * Sync Configuration Generator
  * 
  * Legge base-config.json e genera automaticamente:
- * - claude-vscode.json
- * - github-copilot-vscode.json
- * - INSTRUCTIONS.md
+ * - claude-vscode.json (Claude Code per VS Code)
+ * - claude-cli-config.json (Claude CLI per terminale)
+ * - github-copilot-vscode.json (GitHub Copilot per VS Code)
+ * 
+ * Nota: WARP.md è un file manuale (non auto-generato)
  * 
  * Usage: node sync-configs.js
  */
