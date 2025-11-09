@@ -126,7 +126,7 @@ function generateClaudeConfig() {
     "_generated_at": new Date().toISOString(),
     
     "claude.apiKey": "YOUR_API_KEY_HERE",
-    "claude.modelId": "claude-sonnet-4-20250514",
+    "claude.modelId": "claude-sonnet-4-5-20250929",
     "claude.maxTokens": 8192,
     "claude.temperature": baseConfig.ai_parameters.temperature,
     
