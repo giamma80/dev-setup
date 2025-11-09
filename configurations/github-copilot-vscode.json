@@ -1,6 +1,6 @@
 {
   "_comment": "Auto-generato da base-config.json - NON MODIFICARE MANUALMENTE",
-  "_generated_at": "2025-11-09T20:46:35.597Z",
+  "_generated_at": "2025-11-09T21:02:49.588Z",
   "github.copilot.enable": {
     "*": true,
     "yaml": true,
@@ -25,7 +25,7 @@
   "github.copilot.chat.localeOverride": "it",
   "github.copilot.chat.codeGeneration.instructions": [
     {
-      "text": "Tech Stack: React, React Native, Next.js, Node.js, Express, Supabase, PostgreSQL"
+      "text": "Tech Stack: React, Next.js, TypeScript, Node.js, Express, Supabase, PostgreSQL"
     },
     {
       "text": "AI Params: Temperature 0.3 | Mode: coding | Verbosity: concise"
@@ -41,6 +41,9 @@
     },
     {
       "text": "Language: Explanations IT | Code EN"
+    },
+    {
+      "text": "Golden Rules: KISS (Keep It Simple, Stupid) | YAGNI (You Aren't Gonna Need It) | Measure Before Optimize"
     }
   ],
   "github.copilot.chat.welcomeMessage": "enabled",

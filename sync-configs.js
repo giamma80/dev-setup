@@ -23,10 +23,78 @@ const baseConfig = JSON.parse(fs.readFileSync(BASE_CONFIG_PATH, 'utf8'));
 console.log('🔄 Sincronizzazione configurazioni da base-config.json...\n');
 
 // ============================================
+// HELPER FUNCTIONS
+// ============================================
+
+/**
+ * Estrae librerie da tech_stack con supporto per strutture annidate
+ */
+function extractLibraries(stackSection) {
+  const libraries = [];
+  
+  function traverse(obj, prefix = '') {
+    if (Array.isArray(obj)) {
+      obj.forEach(item => {
+        if (typeof item === 'string') {
+          libraries.push(item);
+        } else if (typeof item === 'object' && item.name) {
+          // Libreria con meta-campi (priority, rationale, etc.)
+          const priority = item.priority ? `[${item.priority}]` : '';
+          libraries.push(`${item.name} ${priority}`.trim());
+        }
+      });
+    } else if (typeof obj === 'object' && obj !== null) {
+      Object.entries(obj).forEach(([key, value]) => {
+        if (key !== 'constraints' && key !== 'core') {
+          traverse(value, prefix ? `${prefix}.${key}` : key);
+        } else if (key === 'core') {
+          traverse(value, prefix);
+        }
+      });
+    }
+  }
+  
+  traverse(stackSection);
+  return libraries;
+}
+
+/**
+ * Formatta il tech stack per il markdown
+ */
+function formatTechStackSection(section, title) {
+  const libraries = extractLibraries(section);
+  if (libraries.length === 0) return '';
+  
+  return `### ${title}\n${libraries.map(l => `- ${l}`).join('\n')}\n`;
+}
+
+// ============================================
 // 1. GENERA INSTRUCTIONS.md
 // ============================================
 function generateInstructions() {
   const instructions = baseConfig.custom_instructions_template.join('\n');
+  
+  // Formatta tech stack
+  let techStackSections = '';
+  
+  if (baseConfig.tech_stack.frontend) {
+    techStackSections += formatTechStackSection(baseConfig.tech_stack.frontend, 'Frontend');
+  }
+  if (baseConfig.tech_stack.backend) {
+    techStackSections += formatTechStackSection(baseConfig.tech_stack.backend, 'Backend');
+  }
+  if (baseConfig.tech_stack.mobile) {
+    techStackSections += formatTechStackSection(baseConfig.tech_stack.mobile, 'Mobile');
+  }
+  if (baseConfig.tech_stack.python_advanced) {
+    techStackSections += formatTechStackSection(baseConfig.tech_stack.python_advanced, 'Python Advanced');
+  }
+  if (baseConfig.tech_stack.database) {
+    techStackSections += formatTechStackSection(baseConfig.tech_stack.database, 'Database');
+  }
+  if (baseConfig.tech_stack.infrastructure) {
+    techStackSections += formatTechStackSection(baseConfig.tech_stack.infrastructure, 'Infrastructure');
+  }
   
   const content = `# 📋 Istruzioni Custom per AI Copilots
 
@@ -75,20 +143,7 @@ ${instructions}
 
 ## 🛠️ Tech Stack
 
-### Frontend
-${baseConfig.tech_stack.frontend.map(t => `- ${t}`).join('\n')}
-
-### Backend
-${baseConfig.tech_stack.backend.map(t => `- ${t}`).join('\n')}
-
-### Mobile
-${baseConfig.tech_stack.mobile.map(t => `- ${t}`).join('\n')}
-
-### Database
-${baseConfig.tech_stack.database.map(t => `- ${t}`).join('\n')}
-
-### Infrastructure
-${baseConfig.tech_stack.infrastructure.map(t => `- ${t}`).join('\n')}
+${techStackSections}
 
 ---
 
@@ -105,6 +160,18 @@ ${baseConfig.coding_standards.patterns.required.map(p => `- ${p}`).join('\n')}
 
 ### Antipatterns to Avoid
 ${baseConfig.coding_standards.antipatterns_to_avoid.map(a => `- ${a}`).join('\n')}
+
+---
+
+## 🎯 Golden Rules
+
+${baseConfig.golden_rules ? baseConfig.golden_rules.map(r => `### ${r.rule}\n**Priority**: ${r.priority} | **Rationale**: ${r.rationale}\n`).join('\n') : ''}
+
+---
+
+## ⚠️ Warnings & Best Practices
+
+${baseConfig.warnings ? baseConfig.warnings.map(w => `**[${w.category}]** ${w.warning}\n- Rationale: ${w.rationale}\n- Mitigation: ${w.mitigation}\n`).join('\n') : ''}
 
 ---
 
@@ -164,10 +231,16 @@ function generateClaudeConfig() {
 // 3. GENERA github-copilot-vscode.json
 // ============================================
 function generateGitHubCopilotConfig() {
+  // Estrae librerie principali per istruzioni compatte
+  const frontendLibs = extractLibraries(baseConfig.tech_stack.frontend).slice(0, 3);
+  const backendCore = baseConfig.tech_stack.backend.core || baseConfig.tech_stack.backend;
+  const backendLibs = Array.isArray(backendCore) ? backendCore.slice(0, 2) : extractLibraries(baseConfig.tech_stack.backend).slice(0, 2);
+  const databaseLibs = baseConfig.tech_stack.database.slice(0, 2);
+  
   // Crea versione compatta delle istruzioni
   const compactInstructions = [
     {
-      "text": `Tech Stack: ${baseConfig.tech_stack.frontend.slice(0, 3).join(', ')}, ${baseConfig.tech_stack.backend.slice(0, 2).join(', ')}, ${baseConfig.tech_stack.database.slice(0, 2).join(', ')}`
+      "text": `Tech Stack: ${frontendLibs.join(', ')}, ${backendLibs.join(', ')}, ${databaseLibs.join(', ')}`
     },
     {
       "text": `AI Params: Temperature ${baseConfig.ai_parameters.temperature} | Mode: ${baseConfig.ai_parameters.optimization_mode} | Verbosity: ${baseConfig.ai_parameters.verbosity}`
@@ -183,6 +256,9 @@ function generateGitHubCopilotConfig() {
     },
     {
       "text": `Language: Explanations ${baseConfig.ai_parameters.explanation_language.toUpperCase()} | Code ${baseConfig.ai_parameters.code_language.toUpperCase()}`
+    },
+    {
+      "text": `Golden Rules: ${baseConfig.golden_rules ? baseConfig.golden_rules.slice(0, 3).map(r => r.rule).join(' | ') : 'KISS, YAGNI, Measure Before Optimize'}`
     }
   ];
 

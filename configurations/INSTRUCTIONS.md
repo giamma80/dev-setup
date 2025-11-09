@@ -205,14 +205,27 @@ Azione: Implementa invece di suggerire (default)
 
 ### Frontend
 - React
-- React Native
 - Next.js
 - TypeScript
-- Expo
-- React Navigation
 - React Query/TanStack Query
 - Zustand/Redux Toolkit
-
+- Chakra UI [prefer]
+- Mantine [prefer]
+- Ant Design [must]
+- Radix UI [must]
+- Headless UI [prefer]
+- Tailwind CSS [must]
+- Emotion [prefer]
+- Stitches [avoid]
+- React Hook Form [must]
+- Zod [must]
+- Formik [avoid]
+- react-intl [prefer]
+- i18next [must]
+- Recharts [prefer]
+- Visx [must]
+- D3 [avoid]
+- Framer Motion [must]
 ### Backend
 - Node.js
 - Express
@@ -221,20 +234,53 @@ Azione: Implementa invece di suggerire (default)
 - FastAPI
 - Flask
 - NestJS
-
 ### Mobile
 - React Native
 - Expo
 - iOS Native (Swift)
-- React Native Paper
+- React Navigation
 - Reanimated
-
+- React Native Paper [must]
+- NativeBase [prefer]
+- React Native Elements [prefer]
+- UI Kitten [avoid]
+- react-native-gesture-handler [must]
+- react-native-reanimated [must]
+- react-native-fast-image [must]
+- react-native-mmkv [prefer]
+- react-native-screens [must]
+- react-native-safe-area-context [must]
+### Python Advanced
+- SQLModel [must]
+- HTTPX [must]
+- Uvicorn [must]
+- Strawberry [prefer]
+- SQLAlchemy 2.0+ [must]
+- Alembic [must]
+- Tortoise ORM [prefer]
+- Celery [prefer]
+- Dramatiq [prefer]
+- RQ [prefer]
+- Prefect [prefer]
+- Dagster [prefer]
+- Polars [prefer]
+- Dask [prefer]
+- PyTorch [must]
+- Transformers [must]
+- sentence-transformers [prefer]
+- LangChain [prefer]
+- structlog [must]
+- opentelemetry [must]
+- sentry-sdk [must]
+- pytest [must]
+- hypothesis [prefer]
+- uvloop [prefer]
+- py-spy [prefer]
 ### Database
 - Supabase
 - PostgreSQL
 - MongoDB
 - Redis
-
 ### Infrastructure
 - Docker
 - Docker Compose
@@ -242,6 +288,7 @@ Azione: Implementa invece di suggerire (default)
 - Render
 - GitHub Actions
 - GitLab CI/CD
+
 
 ---
 
@@ -274,4 +321,95 @@ Azione: Implementa invece di suggerire (default)
 
 ---
 
-**Ultima sincronizzazione**: 2025-11-09T20:46:35.587Z
+## 🎯 Golden Rules
+
+### KISS (Keep It Simple, Stupid)
+**Priority**: must | **Rationale**: Mantieni le cose semplici finché non serve complessità reale
+
+### YAGNI (You Aren't Gonna Need It)
+**Priority**: must | **Rationale**: Non implementare funzionalità non richieste o speculative
+
+### Measure Before Optimize
+**Priority**: must | **Rationale**: Profila prima di ottimizzare, evita premature optimization
+
+### Fail Fast, Recover Gracefully
+**Priority**: must | **Rationale**: Fallimenti evidenti in dev, retry limitati e rollback in prod
+
+### Single Source of Truth
+**Priority**: must | **Rationale**: Config centralizzata, feature flags, un posto per env vars e tokens
+
+### API First + Contract Testing
+**Priority**: prefer | **Rationale**: Definisci contratti (OpenAPI/GraphQL schema) prima di implementare
+
+### Automate Quality Gates
+**Priority**: must | **Rationale**: Lint/test/build devono bloccare merge su failures
+
+### Small PRs / Atomic Commits
+**Priority**: prefer | **Rationale**: Rendi le code review rapide, mirate e facili da rollback
+
+### Docs as Code
+**Priority**: prefer | **Rationale**: ADRs per decisioni architetturali, README per setup dev
+
+### Security by Design
+**Priority**: must | **Rationale**: Threat modeling per feature critiche, mitigations documentate
+
+### Observability by Default
+**Priority**: must | **Rationale**: Metrics, traces, logs, runbooks per incidenti
+
+
+---
+
+## ⚠️ Warnings & Best Practices
+
+**[security]** Mai curl | sh senza verificare checksum/signature
+- Rationale: Script injection risk, supply chain attack
+- Mitigation: Download script, verifica hash SHA256, poi esegui
+
+**[dependencies]** Pinna le dipendenze con lockfile (package-lock/yarn.lock/poetry.lock)
+- Rationale: Reproducible builds, evita breaking changes in CI/prod
+- Mitigation: Commit lockfiles, policy di aggiornamento controllato (Dependabot/Renovate)
+
+**[secrets]** MAI commitare .env o secrets in repository
+- Rationale: Esposizione credenziali, compliance violations
+- Mitigation: Usa secret manager (Vault, GitHub Secrets, AWS Secrets Manager), .gitignore strict
+
+**[database]** RLS & least-privilege: DB users con permessi minimi
+- Rationale: Previene privilege escalation, limita blast radius
+- Mitigation: Row Level Security su Supabase/Postgres, test per query privilege escalation
+
+**[database]** Migrations first: schema changes solo via migrations
+- Rationale: Evita drift tra dev/staging/prod, rollback safe
+- Mitigation: No manual DB edits in prod, usa Alembic/Prisma Migrate, version control
+
+**[api]** Rate limiting & quotas su API esterne e interne
+- Rationale: Previene DoS, throttling, costi inattesi
+- Mitigation: Implementa rate limiter (express-rate-limit, FastAPI Slowapi), circuit breaker
+
+**[api]** Timeouts & retries: pattern idempotent + backoff esponenziale
+- Rationale: Evita cascading failures, thundering herd
+- Mitigation: Non retry POST non-idempotenti, usa idempotency keys, backoff con jitter
+
+**[concurrency]** Race conditions: attenzione a locks e idempotenza dei jobs
+- Rationale: Duplicate processing, data corruption
+- Mitigation: Distributed locks (Redis), idempotent handlers, optimistic locking
+
+**[performance]** Performance regressions: bundle size budgets e tracking nelle PR
+- Rationale: User experience degrada silenziosamente
+- Mitigation: Lighthouse CI, bundlesize, webpack-bundle-analyzer, performance budgets
+
+**[accessibility]** Accessibility MUST: colori, keyboard nav, screen reader support
+- Rationale: Legal compliance (ADA, WCAG), inclusività
+- Mitigation: axe-core, eslint-plugin-jsx-a11y, test manuali con screen reader
+
+**[licensing]** Certifica le librerie: no GPL viral in alcuni contesti commerciali
+- Rationale: Rischio legale, incompatibilità licenze
+- Mitigation: license-checker, policy aziendale chiara (MIT/Apache/BSD preferred)
+
+**[privacy]** Telemetry & GDPR/PII: non inviare dati sensibili nei logs
+- Rationale: Compliance violations, privacy breach
+- Mitigation: Anonimizza PII, consent management, data retention policies
+
+
+---
+
+**Ultima sincronizzazione**: 2025-11-09T21:02:49.577Z
