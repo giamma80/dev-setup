@@ -235,7 +235,30 @@ MIT
 
 ---
 
+## ✅ Testing Configurations
+
+Test che le configurazioni siano valide:
+
+```bash
+cd ~/scripts
+node test-configs.js
+```
+
+**Il test verifica**:
+- ✅ Esistenza file richiesti
+- ✅ Validità JSON
+- ✅ Struttura base-config.json
+- ✅ Coerenza tra base-config e file generati
+- ✅ Best practices (temperature, coverage, patterns)
+- ✅ File patterns di esclusione
+- ✅ Custom instructions complete
+
+**Output atteso**: `✅ Passed: 63/64` (1 warning opzionale su GOLDEN RULES section)
+
+---
+
 **⚡ Quick Links**:
 - [AI Configuration Guide](ai-configurations/README.md)
 - [Dev Setup Guide](dev-configurations/README.md)
 - [Base Config JSON](ai-configurations/base-config.json)
+- [Test Configurations](test-configs.js)
