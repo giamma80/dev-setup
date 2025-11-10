@@ -40,6 +40,12 @@
 ```bash
 cd ~/scripts/dev-configurations
 
+# Configure credentials (optional, for CLI authentication)
+cp .env.example .env
+# Edit .env and add your tokens:
+# - GITHUB_TOKEN: https://github.com/settings/tokens (scopes: repo, read:org, workflow)
+# - VERCEL_TOKEN: https://vercel.com/account/tokens
+
 # Dry-run (see what will be installed)
 ./mac-dev-setup.sh --dry-run
 
@@ -52,6 +58,8 @@ cd ~/scripts/dev-configurations
 - Node.js (nvm), Python (pyenv), Go
 - Docker (Colima), Docker Compose
 - Git, jq, htop, wget, curl
+- **GitHub CLI (gh)** with auto-authentication
+- **Vercel CLI** with auto-authentication
 
 📖 **Full docs**: [`dev-configurations/README.md`](dev-configurations/README.md)
 
@@ -212,7 +220,13 @@ docs: update documentation
 
 ## 📊 Change Log
 
-### v1.2.0 (2025-11-09)
+### v1.2.0 (2025-11-10)
+- ✨ Added GitHub CLI (gh) installation with auto-authentication
+- ✨ Added Vercel CLI installation with auto-authentication
+- 🔐 Added `.env` support for secure credential management
+- 📝 Created `.env.example` template with token documentation
+- 🔒 Updated `.gitignore` to exclude all `.env` files
+- 📚 Updated documentation for CLI tools usage
 - Reorganized structure: `ai-configurations/` and `dev-configurations/`
 - Added meta-fields (priority/rationale/constraints)
 - Added golden rules and warnings

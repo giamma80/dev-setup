@@ -10,8 +10,8 @@
 
 Script automatizzato per configurare un ambiente di sviluppo completo su macOS.
 
-**Versione**: 1.1.3  
-**Ultima modifica**: 2025-11-09
+**Versione**: 1.2.0  
+**Ultima modifica**: 2025-11-10
 
 #### 🎯 Cosa Installa
 
@@ -21,7 +21,7 @@ Script automatizzato per configurare un ambiente di sviluppo completo su macOS.
 
 **Programming Languages & Runtimes**:
 - Node.js (via nvm) - LTS version
-- Python (via pyenv) - 3.11.x
+- Python (via pyenv) - 3.12.7
 - Go (latest)
 
 **Version Managers**:
@@ -36,7 +36,11 @@ Script automatizzato per configurare un ambiente di sviluppo completo su macOS.
 - Git (version control)
 - jq (JSON processor)
 - htop (system monitoring)
-- wget, curl (download utilities)
+- wget, curl, tree (download utilities)
+
+**CLI Tools** (with auto-authentication):
+- **GitHub CLI (gh)** - Authenticate with GitHub token from `.env`
+- **Vercel CLI** - Authenticate with Vercel token from `.env`
 
 **Optional Tools** (commented out):
 - AWS CLI
@@ -53,10 +57,16 @@ Script automatizzato per configurare un ambiente di sviluppo completo su macOS.
 ```bash
 cd ~/scripts/dev-configurations
 
-# Dry-run (mostra cosa verrà fatto senza installare)
+# 1. Configure credentials (optional - for GitHub/Vercel CLI authentication)
+cp .env.example .env
+# Edit .env and add your tokens:
+# - GITHUB_TOKEN: https://github.com/settings/tokens (scopes: repo, read:org, workflow)
+# - VERCEL_TOKEN: https://vercel.com/account/tokens
+
+# 2. Dry-run (mostra cosa verrà fatto senza installare)
 ./mac-dev-setup.sh --dry-run
 
-# Installazione completa
+# 3. Installazione completa
 ./mac-dev-setup.sh
 ```
 
@@ -239,12 +249,31 @@ Lo script:
 - ✅ Usa repository ufficiali per tutti i tool
 - ✅ Non scarica da fonti non verificate
 - ✅ Genera log completi per audit
-- ❌ Non richiede mai password o API key
+- 🔒 Credenziali gestite tramite `.env` (mai committate)
+- 🔒 File `.env` escluso automaticamente da git
 
 **Verifica lo script prima di eseguirlo**:
 ```bash
 cat mac-dev-setup.sh | less
 ```
+
+### Gestione Credenziali
+
+Il file `.env` contiene token sensibili e **NON deve mai essere committato**:
+
+```bash
+# .env è già escluso da .gitignore
+git status  # .env non deve apparire
+
+# Se .env viene tracciato per errore:
+git rm --cached dev-configurations/.env
+```
+
+**Token richiesti**:
+- `GITHUB_TOKEN`: Token personale con scopes `repo`, `read:org`, `workflow`
+- `VERCEL_TOKEN`: Token di autenticazione Vercel
+
+Vedi `.env.example` per la configurazione completa.
 
 ---
 

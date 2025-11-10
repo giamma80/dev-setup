@@ -13,6 +13,11 @@ ai-configurations/warp-global-rules.md
 !configurations/*.json
 !ai-configurations/base-config.json
 
+# Environment variables (NEVER commit credentials)
+.env
+**/.env
+*.env.local
+
 # Backup files
 *.bak
 *.backup

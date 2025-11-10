@@ -1,15 +1,15 @@
 #!/bin/bash
 
 # Mac Development Environment Setup Script
-# Versione: 1.1.2
+# Versione: 1.2.0
 # Requisiti: macOS 12+, Xcode CLI Tools, 10GB spazio
 # Testato: macOS 12-15 (Intel & Apple Silicon)
-# Repository: https://github.com/yourusername/mac-dev-setup
+# Repository: https://github.com/giamma80/dev-setup
 
 set -euo pipefail
 
 # Versione e configurazione
-SCRIPT_VERSION="1.1.4"
+SCRIPT_VERSION="1.2.0"
 PYTHON_VERSION="3.12.7"
 NODE_VERSION="--lts"
 MIN_MACOS_MAJOR=12
@@ -69,6 +69,15 @@ COMPONENTI:
     - Docker (via Colima)
     - React Native tools (watchman, cocoapods)
     - Dev tools (git, wget, jq, tree)
+    - GitHub CLI (gh) con autenticazione
+    - Vercel CLI con autenticazione
+    
+CONFIGURAZIONE:
+    Per autenticare GitHub e Vercel CLI automaticamente:
+    1. Copia dev-configurations/.env.example in dev-configurations/.env
+    2. Aggiungi i tuoi token:
+       - GITHUB_TOKEN: https://github.com/settings/tokens
+       - VERCEL_TOKEN: https://vercel.com/account/tokens
 
 ESEMPI:
     ./mac-dev-setup.sh                    # Interattivo
@@ -128,7 +137,7 @@ log_error() {
 }
 
 log_verbose() {
-    [[ "$VERBOSE" == true ]] && printf "  → %s\n" "$1"
+    [[ "$VERBOSE" == true ]] && printf "  → %s\n" "$1" || true
 }
 
 # JSON escape completo
@@ -235,6 +244,39 @@ acquire_lock() {
     log_error "Lock timeout (${max_wait}s)"
     log_error "Se il lock è stale, rimuovi: rm -rf $LOCKFILE"
     return 1
+}
+
+# Load environment variables from .env file
+load_env() {
+    local env_file="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/.env"
+    
+    if [[ ! -f "$env_file" ]]; then
+        log_warning "File .env non trovato: $env_file"
+        log_warning "Copia .env.example in .env e configura i token"
+        return 1
+    fi
+    
+    log_verbose "Carico variabili da: $env_file"
+    
+    # Source the .env file (export variables)
+    set -a
+    # shellcheck disable=SC1090
+    source "$env_file"
+    set +a
+    
+    # Validate required tokens
+    local missing_vars=()
+    [[ -z "${GITHUB_TOKEN:-}" ]] && missing_vars+=("GITHUB_TOKEN")
+    [[ -z "${VERCEL_TOKEN:-}" ]] && missing_vars+=("VERCEL_TOKEN")
+    
+    if [[ ${#missing_vars[@]} -gt 0 ]]; then
+        log_warning "Variabili mancanti in .env: ${missing_vars[*]}"
+        log_warning "Alcune CLI potrebbero non autenticarsi correttamente"
+        return 1
+    fi
+    
+    log_success "Variabili caricate correttamente"
+    return 0
 }
 
 # Timeout portabile con process group termination
@@ -426,18 +468,15 @@ acquire_lock || exit 1
 # Prerequisiti
 log_info "Prerequisiti..."
 
-MACOS_VERSION=$(sw_vers -productVersion 2>/dev/null || echo "unknown")
+MACOS_VERSION=$(sw_vers -productVersion)
 MACOS_MAJOR=$(echo "$MACOS_VERSION" | cut -d. -f1)
 ARCH=$(uname -m)
 log_verbose "macOS $MACOS_VERSION ($ARCH)"
 
-# Verifica che MACOS_MAJOR sia numerico
-if [[ ! "$MACOS_MAJOR" =~ ^[0-9]+$ ]]; then
-    log_error "Impossibile determinare versione macOS: $MACOS_VERSION"
+if [[ $MACOS_MAJOR -lt $MIN_MACOS_MAJOR ]]; then
+    log_error "macOS $MIN_MACOS_MAJOR+ richiesto"
     exit 1
 fi
-
-[[ $MACOS_MAJOR -lt $MIN_MACOS_MAJOR ]] && { log_error "macOS $MIN_MACOS_MAJOR+ richiesto (rilevato: $MACOS_MAJOR)"; exit 1; }
 
 if ! xcode-select -p &>/dev/null; then
     log_error "Xcode Command Line Tools richiesti"
@@ -449,7 +488,11 @@ fi
 AVAILABLE_SPACE_KB=$(df -k / | tail -1 | awk '{print $4}')
 AVAILABLE_SPACE_GB=$((AVAILABLE_SPACE_KB / 1024 / 1024))
 log_verbose "Spazio: ${AVAILABLE_SPACE_GB}GB"
-[[ $AVAILABLE_SPACE_GB -lt $MIN_SPACE_GB ]] && { log_error "Spazio insufficiente"; exit 1; }
+
+if [[ $AVAILABLE_SPACE_GB -lt $MIN_SPACE_GB ]]; then
+    log_error "Spazio insufficiente"
+    exit 1
+fi
 
 if ! curl -sSf --connect-timeout 5 --retry 3 --retry-delay 2 --head https://github.com >/dev/null 2>&1; then
     log_error "Connessione internet non disponibile"
@@ -564,6 +607,86 @@ for tool in git wget tree jq; do
 done
 printf "\n"
 
+# 4.1. CLI Tools (GitHub, Vercel)
+log_info "CLI Tools..."
+
+# Load environment variables
+ENV_LOADED=false
+load_env && ENV_LOADED=true || true
+
+# GitHub CLI
+log_info "GitHub CLI (gh)..."
+if install_or_upgrade_brew_package "gh"; then
+    if [[ "$ENV_LOADED" == true && -n "${GITHUB_TOKEN:-}" ]]; then
+        log_info "Autenticazione GitHub CLI..."
+        if [[ "$DRY_RUN" == false ]]; then
+            if echo "$GITHUB_TOKEN" | gh auth login --with-token 2>/dev/null; then
+                if gh auth status &>/dev/null; then
+                    log_success "GitHub CLI autenticata"
+                else
+                    log_warning "Autenticazione GitHub fallita (verifica token)"
+                    FAILED_COMPONENTS+=("GitHub CLI auth")
+                fi
+            else
+                log_warning "Errore durante autenticazione GitHub CLI"
+                FAILED_COMPONENTS+=("GitHub CLI auth")
+            fi
+        else
+            log_verbose "[DRY-RUN] Skippo autenticazione GitHub CLI"
+        fi
+    else
+        log_warning "GITHUB_TOKEN non disponibile, skippo autenticazione"
+        log_warning "Configura .env per autenticare automaticamente"
+    fi
+else
+    FAILED_COMPONENTS+=("GitHub CLI")
+fi
+
+# Vercel CLI
+log_info "Vercel CLI..."
+# Vercel richiede Node.js, verifica se disponibile
+if command -v npm &>/dev/null; then
+    if [[ "$DRY_RUN" == false ]]; then
+        if npm list -g vercel &>/dev/null || npm install -g vercel; then
+            log_success "Vercel CLI installata"
+            
+            if [[ "$ENV_LOADED" == true && -n "${VERCEL_TOKEN:-}" ]]; then
+                log_info "Autenticazione Vercel CLI..."
+                # Vercel salva token in config file
+                local vercel_config="$HOME/.vercel"
+                [[ ! -d "$vercel_config" ]] && mkdir -p "$vercel_config"
+                
+                # Crea auth.json con token
+                cat > "$vercel_config/auth.json" <<EOF
+{
+  "token": "$VERCEL_TOKEN"
+}
+EOF
+                
+                if vercel whoami &>/dev/null; then
+                    log_success "Vercel CLI autenticata"
+                else
+                    log_warning "Autenticazione Vercel fallita (verifica token)"
+                    FAILED_COMPONENTS+=("Vercel CLI auth")
+                fi
+            else
+                log_warning "VERCEL_TOKEN non disponibile, skippo autenticazione"
+                log_warning "Configura .env per autenticare automaticamente"
+            fi
+        else
+            log_error "Errore installazione Vercel CLI"
+            FAILED_COMPONENTS+=("Vercel CLI")
+        fi
+    else
+        log_verbose "[DRY-RUN] Skippo installazione Vercel CLI"
+    fi
+else
+    log_warning "npm non disponibile, skippo Vercel CLI"
+    log_warning "Vercel CLI richiede Node.js"
+    FAILED_COMPONENTS+=("Vercel CLI (npm missing)")
+fi
+printf "\n"
+
 # 5. Docker/Colima
 log_info "Docker/Colima..."
 for tool in docker docker-compose colima; do
@@ -612,6 +735,18 @@ export NVM_DIR="\$HOME/.nvm"
 # Android
 export ANDROID_HOME=\$HOME/Library/Android/sdk
 export PATH=\$PATH:\$ANDROID_HOME/emulator:\$ANDROID_HOME/platform-tools
+
+# Colors for ls/tree (BSD ls on macOS)
+export CLICOLOR=1
+export LSCOLORS=GxFxCxDxBxegedabagaced
+
+# GNU ls colors (se installato via coreutils)
+export LS_COLORS='di=1;36:ln=1;35:so=1;32:pi=1;33:ex=1;31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=34;43'
+
+# Alias per ls con colori
+alias ls='ls -G'
+alias ll='ls -lhG'
+alias la='ls -lahG'
 EOF
 
     [[ "$DRY_RUN" == false ]] && {
