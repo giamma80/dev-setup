@@ -97,7 +97,7 @@
   
   "tool_usage_best_practices": {
     "description": "Best practices per definire e usare tools/functions con AI agents",
-    "priority": "high",
+    "priority": "must",
     "key_principles": {
       "detailed_descriptions": {
         "importance": "critical",
@@ -202,7 +202,7 @@
         ],
         "i18n": [
           {"name": "react-intl", "priority": "prefer", "rationale": "Internazionalizzazione completa", "constraints": "React 16.3+"},
-          {"name": "i18next", "priority": "must", "rationale": "Flessibile, ecosystem ricco", "constraints": "Node 12+"}
+          {"name": "i18next", "priority": "must", "rationale": "Flessibile, ecosystem ricco", "constraints": "Node 18+"}
         ],
         "charts": [
           {"name": "Recharts", "priority": "prefer", "rationale": "Dichiarativo, React-first", "constraints": "React 16+"},
@@ -259,46 +259,46 @@
     "python_advanced": {
       "web_async": [
         {"name": "SQLModel", "priority": "must", "rationale": "Pydantic + SQLAlchemy, ergonomia FastAPI", "constraints": "Python 3.10+, Pydantic v2"},
-        {"name": "HTTPX", "priority": "must", "rationale": "Async HTTP client moderno", "constraints": "Python 3.8+"},
-        {"name": "Uvicorn", "priority": "must", "rationale": "ASGI server veloce", "constraints": "Python 3.7+"},
-        {"name": "Strawberry", "priority": "prefer", "rationale": "GraphQL type-safe con dataclasses", "constraints": "Python 3.8+"}
+        {"name": "HTTPX", "priority": "must", "rationale": "Async HTTP client moderno", "constraints": "Python 3.10+"},
+        {"name": "Uvicorn", "priority": "must", "rationale": "ASGI server veloce", "constraints": "Python 3.10+"},
+        {"name": "Strawberry", "priority": "prefer", "rationale": "GraphQL type-safe con dataclasses", "constraints": "Python 3.10+"}
       ],
       "orm_db": [
-        {"name": "SQLAlchemy 2.0+", "priority": "must", "rationale": "ORM maturo con async support", "constraints": "Python 3.7+"},
+        {"name": "SQLAlchemy 2.0+", "priority": "must", "rationale": "ORM maturo con async support", "constraints": "Python 3.10+"},
         {"name": "Alembic", "priority": "must", "rationale": "Migrations standard", "constraints": "SQLAlchemy 1.1+"},
-        {"name": "Tortoise ORM", "priority": "prefer", "rationale": "ORM async-first", "constraints": "Python 3.7+"}
+        {"name": "Tortoise ORM", "priority": "prefer", "rationale": "ORM async-first", "constraints": "Python 3.10+"}
       ],
       "task_queues": [
-        {"name": "Celery", "priority": "prefer", "rationale": "Maturo, battle-tested", "constraints": "Python 3.7+"},
-        {"name": "Dramatiq", "priority": "prefer", "rationale": "Semplice, affidabile", "constraints": "Python 3.6+"},
-        {"name": "RQ", "priority": "prefer", "rationale": "Lightweight, Redis-based", "constraints": "Python 3.6+"}
+        {"name": "Celery", "priority": "prefer", "rationale": "Maturo, battle-tested", "constraints": "Python 3.10+"},
+        {"name": "Dramatiq", "priority": "prefer", "rationale": "Semplice, affidabile", "constraints": "Python 3.10+"},
+        {"name": "RQ", "priority": "prefer", "rationale": "Lightweight, Redis-based", "constraints": "Python 3.10+"}
       ],
       "workflow_orchestration": [
-        {"name": "Prefect", "priority": "prefer", "rationale": "Orchestrazione moderna, Python-first", "constraints": "Python 3.8+"},
-        {"name": "Dagster", "priority": "prefer", "rationale": "Data orchestration type-safe", "constraints": "Python 3.8+"}
+        {"name": "Prefect", "priority": "prefer", "rationale": "Orchestrazione moderna, Python-first", "constraints": "Python 3.10+"},
+        {"name": "Dagster", "priority": "prefer", "rationale": "Data orchestration type-safe", "constraints": "Python 3.10+"}
       ],
       "data_processing": [
-        {"name": "Polars", "priority": "prefer", "rationale": "Faster pandas, Rust-based", "constraints": "Python 3.8+"},
-        {"name": "Dask", "priority": "prefer", "rationale": "Scaling pandas", "constraints": "Python 3.8+"}
+        {"name": "Polars", "priority": "prefer", "rationale": "Faster pandas, Rust-based", "constraints": "Python 3.10+"},
+        {"name": "Dask", "priority": "prefer", "rationale": "Scaling pandas", "constraints": "Python 3.10+"}
       ],
       "ml_ai": [
-        {"name": "PyTorch", "priority": "must", "rationale": "Deep learning framework", "constraints": "Python 3.8+"},
-        {"name": "Transformers", "priority": "must", "rationale": "Hugging Face, NLP/LLMs", "constraints": "Python 3.8+"},
-        {"name": "sentence-transformers", "priority": "prefer", "rationale": "Embeddings pre-trained", "constraints": "Python 3.8+"},
-        {"name": "LangChain", "priority": "prefer", "rationale": "LLM orchestration", "constraints": "Python 3.8+"}
+        {"name": "PyTorch", "priority": "must", "rationale": "Deep learning framework", "constraints": "Python 3.10+"},
+        {"name": "Transformers", "priority": "must", "rationale": "Hugging Face, NLP/LLMs", "constraints": "Python 3.10+"},
+        {"name": "sentence-transformers", "priority": "prefer", "rationale": "Embeddings pre-trained", "constraints": "Python 3.10+"},
+        {"name": "LangChain", "priority": "prefer", "rationale": "LLM orchestration", "constraints": "Python 3.10+"}
       ],
       "observability": [
-        {"name": "structlog", "priority": "must", "rationale": "Structured logging", "constraints": "Python 3.6+"},
-        {"name": "opentelemetry", "priority": "must", "rationale": "Observability standard", "constraints": "Python 3.7+"},
-        {"name": "sentry-sdk", "priority": "must", "rationale": "Error tracking", "constraints": "Python 3.6+"}
+        {"name": "structlog", "priority": "must", "rationale": "Structured logging", "constraints": "Python 3.10+"},
+        {"name": "opentelemetry", "priority": "must", "rationale": "Observability standard", "constraints": "Python 3.10+"},
+        {"name": "sentry-sdk", "priority": "must", "rationale": "Error tracking", "constraints": "Python 3.10+"}
       ],
       "testing": [
-        {"name": "pytest", "priority": "must", "rationale": "Standard de-facto", "constraints": "Python 3.7+"},
-        {"name": "hypothesis", "priority": "prefer", "rationale": "Property-based testing", "constraints": "Python 3.6+"}
+        {"name": "pytest", "priority": "must", "rationale": "Standard de-facto", "constraints": "Python 3.10+"},
+        {"name": "hypothesis", "priority": "prefer", "rationale": "Property-based testing", "constraints": "Python 3.10+"}
       ],
       "performance": [
-        {"name": "uvloop", "priority": "prefer", "rationale": "Event loop velocissimo", "constraints": "Python 3.7+"},
-        {"name": "py-spy", "priority": "prefer", "rationale": "Profiler sampling", "constraints": "Python 3.5+"}
+        {"name": "uvloop", "priority": "prefer", "rationale": "Event loop velocissimo", "constraints": "Python 3.10+"},
+        {"name": "py-spy", "priority": "prefer", "rationale": "Profiler sampling", "constraints": "Python 3.10+"}
       ]
     },
     "database": [
@@ -617,7 +617,7 @@
       "rule": "Small PRs / Atomic Commits",
       "rationale": "Rendi le code review rapide, mirate e facili da rollback",
       "priority": "prefer",
-      "example": "1 PR = 1 feature/fix, max 400 righe, commit atomici con conventional commits"
+      "example": "1 PR = 1 feature/fix, max 250 righe, commit atomici con conventional commits"
     },
     {
       "rule": "Docs as Code",
@@ -659,25 +659,25 @@
       "mitigation": "Usa secret manager (Vault, GitHub Secrets, AWS Secrets Manager), .gitignore strict"
     },
     {
-      "category": "database",
+      "category": "database:security",
       "warning": "RLS & least-privilege: DB users con permessi minimi",
       "rationale": "Previene privilege escalation, limita blast radius",
       "mitigation": "Row Level Security su Supabase/Postgres, test per query privilege escalation"
     },
     {
-      "category": "database",
+      "category": "database:migrations",
       "warning": "Migrations first: schema changes solo via migrations",
       "rationale": "Evita drift tra dev/staging/prod, rollback safe",
       "mitigation": "No manual DB edits in prod, usa Alembic/Prisma Migrate, version control"
     },
     {
-      "category": "api",
+      "category": "api:protection",
       "warning": "Rate limiting & quotas su API esterne e interne",
       "rationale": "Previene DoS, throttling, costi inattesi",
       "mitigation": "Implementa rate limiter (express-rate-limit, FastAPI Slowapi), circuit breaker"
     },
     {
-      "category": "api",
+      "category": "api:reliability",
       "warning": "Timeouts & retries: pattern idempotent + backoff esponenziale",
       "rationale": "Evita cascading failures, thundering herd",
       "mitigation": "Non retry POST non-idempotenti, usa idempotency keys, backoff con jitter"
@@ -818,79 +818,6 @@
     "   - Pylint + Black + mypy (Python)",
     "   - Fail su errori, warning ok",
     "",
-    "=== CONTEXT MANAGEMENT ===",
-    "",
-    "**Critical**: Gestisci il contesto proattivamente per evitare compressione e perdita di informazioni.",
-    "",
-    "📊 Thresholds:",
-    "• 50%: ⚠️ Warning - monitora per riassunti",
-    "• 70%: 📊 Action - proponi compressione specifica",
-    "• 85%: 🚨 Critical - comprimi automaticamente (con avviso)",
-    "",
-    "✅ Always Keep:",
-    "• Obiettivo corrente + errori non risolti",
-    "• File aperti + ultime 3 modifiche",
-    "• Decisioni architetturali",
-    "• Golden rules + coding standards + tech preferences",
-    "",
-    "♻️ Can Compress:",
-    "• Output comandi già completati",
-    "• File letti e non più necessari",
-    "• Conversazioni tangenziali risolte",
-    "• Debug output intermedi",
-    "",
-    "📝 Summarize Before Forgetting:",
-    "• Pattern errori ricorrenti",
-    "• Soluzioni alternative scartate (con motivazione)",
-    "• Configurazioni sistema rilevanti",
-    "• Breaking changes identificati",
-    "",
-    "🔄 Conversation Chunking:",
-    "• Una conversazione = un obiettivo",
-    "• Cambio contesto → suggerisci nuova chat",
-    "• 10+ interazioni senza progressi → riassumi e restart",
-    "• Obiettivo completato → suggerisci nuova conversazione",
-    "",
-    "⚡ Prompt Caching:",
-    "• Cache: golden rules, coding standards, tech stack, file structures",
-    "• Reuse: best practices, templates comuni, error handling patterns",
-    "• Invalidate: quando base-config.json cambia",
-    "• Benefit: latenza ridotta, token savings",
-    "• Limitation: solo per contenuti statici/infrequent changes",
-    "",
-    "=== TOOL USAGE BEST PRACTICES ===",
-    "",
-    "Quando definisci o usi tools/functions:",
-    "",
-    "📋 Description Quality (CRITICAL):",
-    "• 3-4 sentences minimum (complex tools: more)",
-    "• MAX 1024 characters (API constraint)",
-    "• Explain: WHAT it does, WHEN to use, WHEN NOT to use",
-    "• Document: ogni parametro (type, format, constraints)",
-    "• Specify: return format, limitations, error behavior",
-    "• Add context if tool name is unclear",
-    "",
-    "✅ Description Checklist:",
-    "□ Primary function clear",
-    "□ When to use specified",
-    "□ When NOT to use specified",
-    "□ All params documented",
-    "□ Return format described",
-    "□ Limitations noted",
-    "□ Error handling explained",
-    "□ Under 1024 chars",
-    "□ Tested with AI",
-    "",
-    "🎯 Priority: Descriptions > Examples",
-    "• Clear comprehensive description FIRST",
-    "• Examples only AFTER description is complete",
-    "",
-    "Example Good Description:",
-    "\"Retrieves current stock price for given ticker symbol. Ticker must be valid symbol for publicly traded company on major US stock exchange (NYSE/NASDAQ). Returns latest trade price in USD. Use when user asks about current/recent price of specific stock. Will NOT provide other company information.\"",
-    "",
-    "Example Bad Description:",
-    "\"Gets stock price for ticker.\"",
-    "",
     "=== GOLDEN RULES ===",
     "• KISS: Keep It Simple",
     "• YAGNI: You Aren't Gonna Need It",
@@ -899,7 +826,7 @@
     "• Single Source of Truth: config centralizzata",
     "• API First: contratti prima dell'implementazione",
     "• Automate Quality Gates: lint/test devono bloccare merge",
-    "• Small PRs: max 400 righe, atomic commits",
+    "• Small PRs: max 250 righe, atomic commits",
     "• Docs as Code: ADRs per decisioni architetturali",
     "• Security by Design: threat modeling, input validation",
     "• Observability by Default: metrics, traces, logs",
