@@ -2,6 +2,12 @@
 *.log
 /tmp/*.log
 
+# Generated files (exclude from repo, regenerate with sync-configs.js)
+ai-configurations/claude-vscode.json
+ai-configurations/claude-cli-config.json
+ai-configurations/github-copilot-vscode.json
+ai-configurations/warp-global-rules.md
+
 # Reports (exclude config files)
 *.json
 !configurations/*.json
