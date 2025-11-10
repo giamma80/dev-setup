@@ -5,6 +5,7 @@
 # Reports (exclude config files)
 *.json
 !configurations/*.json
+!ai-configurations/base-config.json
 
 # Backup files
 *.bak

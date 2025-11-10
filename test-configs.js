@@ -206,6 +206,63 @@ function testBaseConfigStructure() {
       });
     }
     
+    // Test context_management (NEW)
+    if (baseConfig.context_management) {
+      pass(`Context management section exists`);
+      
+      const requiredFields = ['max_context_threshold', 'compression_strategy', 'context_retention', 'proactive_management'];
+      requiredFields.forEach(field => {
+        if (baseConfig.context_management[field]) {
+          pass(`Context management has: ${field}`);
+        } else {
+          fail(`Context management has: ${field}`, `Missing ${field}`);
+        }
+      });
+      
+      // Test threshold format
+      const threshold = baseConfig.context_management.max_context_threshold;
+      if (threshold && threshold.includes('%')) {
+        pass(`Context threshold has valid format: ${threshold}`);
+      } else {
+        fail(`Context threshold format`, `Expected percentage, got ${threshold}`);
+      }
+      
+      // Test prompt_caching exists
+      if (baseConfig.context_management.prompt_caching) {
+        pass(`Prompt caching configuration exists`);
+        if (baseConfig.context_management.prompt_caching.enabled !== undefined) {
+          pass(`Prompt caching has 'enabled' flag`);
+        }
+      } else {
+        fail(`Prompt caching configuration`, `Missing prompt_caching section`);
+      }
+    } else {
+      fail(`Context management section`, `Missing context_management in base-config.json`);
+    }
+    
+    // Test tool_usage_best_practices (NEW)
+    if (baseConfig.tool_usage_best_practices) {
+      pass(`Tool usage best practices section exists`);
+      
+      const requiredFields = ['key_principles', 'tool_description_template', 'practical_tips'];
+      requiredFields.forEach(field => {
+        if (baseConfig.tool_usage_best_practices[field]) {
+          pass(`Tool best practices has: ${field}`);
+        } else {
+          fail(`Tool best practices has: ${field}`, `Missing ${field}`);
+        }
+      });
+      
+      // Test character limit exists
+      if (baseConfig.tool_usage_best_practices.key_principles?.detailed_descriptions?.character_limit === 1024) {
+        pass(`Tool description character limit correctly set to 1024`);
+      } else {
+        fail(`Tool description character limit`, `Expected 1024, got ${baseConfig.tool_usage_best_practices.key_principles?.detailed_descriptions?.character_limit}`);
+      }
+    } else {
+      fail(`Tool usage best practices section`, `Missing tool_usage_best_practices in base-config.json`);
+    }
+    
   } catch (error) {
     fail('Base config structure', error.message);
   }

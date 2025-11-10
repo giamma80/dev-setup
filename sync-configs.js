@@ -93,6 +93,18 @@ function generateClaudeConfig() {
       "includeWorkspaceSymbols": true
     },
     
+    "claude.contextManagement": baseConfig.context_management || {
+      "max_context_threshold": "60%",
+      "enabled": true,
+      "proactive_warnings": true
+    },
+    
+    "claude.promptCaching": {
+      "enabled": true,
+      "cache_static_content": true,
+      "invalidate_on_config_change": true
+    },
+    
     "claude.customInstructions": baseConfig.custom_instructions_template,
     
     "claude.filePatterns": {
@@ -162,6 +174,12 @@ function generateClaudeCLIConfig() {
     "max_tokens": 8192,
     
     "custom_instructions": compactInstructions,
+    
+    "context_management": {
+      "max_threshold": baseConfig.context_management?.max_context_threshold || "60%",
+      "proactive": true,
+      "prompt_caching": true
+    },
     
     "context": {
       "include_git_diff": true,
@@ -262,6 +280,12 @@ function generateGitHubCopilotConfig() {
     "github.copilot.chat.localeOverride": baseConfig.ai_parameters.explanation_language,
     "github.copilot.chat.codeGeneration.instructions": compactInstructions,
     "github.copilot.chat.welcomeMessage": "enabled",
+    
+    "github.copilot.contextManagement": {
+      "maxThreshold": baseConfig.context_management?.max_context_threshold || "60%",
+      "proactiveCompression": true,
+      "cacheStaticContent": true
+    },
     
     "files.exclude": {
       "**/.git": true,
