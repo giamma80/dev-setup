@@ -18,13 +18,16 @@
 │   ├── claude-vscode.json     # Auto-generated
 │   ├── claude-cli-config.json # Auto-generated
 │   ├── github-copilot-vscode.json # Auto-generated
-│   └── warp-config.md         # Warp Terminal workflows
+│   ├── warp-global-rules.md   # Auto-generated (Warp Global Rules)
+│   └── WARP.md                # Manual (Warp Project Rules)
 │
 ├── dev-configurations/         # Development environment setup
 │   ├── README.md              # Setup scripts documentation
 │   └── mac-dev-setup.sh       # Automated Mac dev environment setup
 │
 ├── sync-configs.js            # Auto-generates AI configs from base-config.json
+├── install-configs.sh         # Installs configs to system locations
+├── test-configs.js            # Validates all configurations
 └── .gitignore                 # Git exclusions
 ```
 
@@ -57,7 +60,13 @@ cd ~/scripts/dev-configurations
 ### 2️⃣ Configure AI Copilots
 
 ```bash
-cd ~/scripts/ai-configurations
+# Generate configurations from base-config.json
+node sync-configs.js
+
+# Install configurations to system locations
+./install-configs.sh --all           # Install all
+./install-configs.sh --claude        # Claude only
+./install-configs.sh --dry-run       # Preview changes
 
 # 1. Edit base config (ONLY file you need to modify)
 vim base-config.json
@@ -235,17 +244,39 @@ MIT
 
 ---
 
+## 🔄 Workflow Completo
+
+```bash
+# 1. Modifica configurazioni
+vim ai-configurations/base-config.json
+
+# 2. Genera file configurazione
+node sync-configs.js
+
+# 3. Testa validità configurazioni
+node test-configs.js
+
+# 4. Installa nelle location di sistema
+./install-configs.sh --all
+
+# 5. Commit modifiche
+git add -A
+git commit -m "update: AI configurations"
+git push
+```
+
+---
+
 ## ✅ Testing Configurations
 
 Test che le configurazioni siano valide:
 
 ```bash
-cd ~/scripts
 node test-configs.js
 ```
 
 **Il test verifica**:
-- ✅ Esistenza file richiesti
+- ✅ Esistenza file richiesti (65 file checks)
 - ✅ Validità JSON
 - ✅ Struttura base-config.json
 - ✅ Coerenza tra base-config e file generati
@@ -253,7 +284,7 @@ node test-configs.js
 - ✅ File patterns di esclusione
 - ✅ Custom instructions complete
 
-**Output atteso**: `✅ Passed: 63/64` (1 warning opzionale su GOLDEN RULES section)
+**Output atteso**: `✅ Passed: 65/65`
 
 ---
 
