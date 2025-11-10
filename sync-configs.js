@@ -7,8 +7,9 @@
  * - claude-vscode.json (Claude Code per VS Code)
  * - claude-cli-config.json (Claude CLI per terminale)
  * - github-copilot-vscode.json (GitHub Copilot per VS Code)
+ * - warp-global-rules.md (Warp Global Rules da copiare nella UI)
  * 
- * Nota: WARP.md è un file manuale (non auto-generato)
+ * Nota: WARP.md è un file manuale per Project Rules (non auto-generato)
  * 
  * Usage: node sync-configs.js
  */
@@ -307,6 +308,130 @@ function generateGitHubCopilotConfig() {
   console.log('✅ github-copilot-vscode.json generato');
 }
 
+/**
+ * Genera Warp Global Rules da copiare/incollare nella UI di Warp
+ * Formato: nome + descrizione per ogni regola
+ */
+function generateWarpGlobalRules() {
+  let content = `# Warp Global Rules
+# Copy/paste these into Warp Settings > AI > Knowledge > Manage Rules > Global
+
+`;
+
+  // Golden Rules
+  content += `## Golden Rules\n\n`;
+  if (baseConfig.golden_rules && Array.isArray(baseConfig.golden_rules)) {
+    baseConfig.golden_rules.forEach((rule, index) => {
+      content += `### Rule ${index + 1}: ${rule.rule}\n`;
+      content += `${rule.rationale}\n`;
+      if (rule.example) {
+        content += `Example: ${rule.example}\n`;
+      }
+      content += `\n`;
+    });
+  }
+
+  // Coding Standards
+  content += `## Coding Standards\n\n`;
+  const standards = baseConfig.coding_standards;
+  
+  if (standards && standards.max_function_lines) {
+    content += `### Function Length\n`;
+    content += `Maximum ${standards.max_function_lines} lines per function/method (NON-NEGOTIABLE). `;
+    content += `Split larger functions into smaller, single-purpose functions following SRP.\n\n`;
+  }
+  
+  content += `### Design Patterns (Required)\n`;
+  if (standards.required_patterns && Array.isArray(standards.required_patterns)) {
+    standards.required_patterns.forEach(pattern => {
+      content += `- ${pattern}\n`;
+    });
+  }
+  content += `\n`;
+
+  content += `### Testing Requirements\n`;
+  const testing = baseConfig.quality_requirements?.testing;
+  if (testing) {
+    content += `- Unit tests for all business logic (minimum ${testing.coverage_threshold}% coverage)\n`;
+    content += `- Test edge cases and error conditions\n`;
+    content += `- Never hard-code values just to pass tests\n`;
+  }
+  content += `\n`;
+
+  // Warnings (Top Security/Performance concerns)
+  content += `## Security & Performance Warnings\n\n`;
+  if (baseConfig.warnings && Array.isArray(baseConfig.warnings)) {
+    baseConfig.warnings.slice(0, 5).forEach(warning => {
+      content += `### ${warning.category}\n`;
+      content += `⚠️ ${warning.warning}\n`;
+      content += `Mitigation: ${warning.mitigation}\n\n`;
+    });
+  }
+
+  // Tech Stack Priorities
+  content += `## Tech Stack Priorities\n\n`;
+  const techStack = baseConfig.tech_stack;
+  
+  // Frontend must-use libraries
+  if (techStack.frontend) {
+    const mustUseLibs = [];
+    
+    // Core libraries (array semplice)
+    if (Array.isArray(techStack.frontend.core)) {
+      mustUseLibs.push(...techStack.frontend.core.map(lib => 
+        typeof lib === 'string' ? lib : lib.name
+      ));
+    }
+    
+    // UI libraries con priority "must"
+    if (techStack.frontend.ui_libraries) {
+      Object.values(techStack.frontend.ui_libraries).forEach(category => {
+        if (Array.isArray(category)) {
+          category.forEach(lib => {
+            if (typeof lib === 'object' && lib.priority === 'must') {
+              mustUseLibs.push(`${lib.name}: ${lib.rationale}`);
+            }
+          });
+        }
+      });
+    }
+    
+    if (mustUseLibs.length > 0) {
+      content += `### Frontend (Must Use)\n`;
+      mustUseLibs.forEach(lib => {
+        content += `- ${lib}\n`;
+      });
+      content += `\n`;
+    }
+  }
+
+  // Backend must-use libraries
+  if (techStack.backend?.core) {
+    content += `### Backend (Must Use)\n`;
+    techStack.backend.core.forEach(lib => {
+      const libName = typeof lib === 'string' ? lib : lib.name;
+      content += `- ${libName}\n`;
+    });
+    content += `\n`;
+  }
+
+  // Command Safety Guidelines
+  content += `## Command Safety Guidelines\n\n`;
+  content += `When suggesting commands:\n`;
+  content += `- Prefer safer options (e.g., \`git reset --soft\` over \`--hard\`)\n`;
+  content += `- Always show what will be deleted before destructive operations\n`;
+  content += `- Include error handling in scripts\n`;
+  content += `- Provide rollback instructions for risky operations\n`;
+  content += `- Use \`--dry-run\` flags when available\n\n`;
+
+  content += `---\n`;
+  content += `Generated from base-config.json v${baseConfig.version}\n`;
+
+  const filePath = path.join(CONFIG_DIR, 'warp-global-rules.md');
+  fs.writeFileSync(filePath, content, 'utf8');
+  console.log('✅ warp-global-rules.md generato');
+}
+
 // ============================================
 // MAIN
 // ============================================
@@ -314,12 +439,14 @@ try {
   generateClaudeConfig();
   generateClaudeCLIConfig();
   generateGitHubCopilotConfig();
+  generateWarpGlobalRules();
   
   console.log('\n✨ Sincronizzazione completata!');
   console.log('\n📝 File generati:');
   console.log('  - ai-configurations/claude-vscode.json (VS Code extension)');
   console.log('  - ai-configurations/claude-cli-config.json (CLI terminal)');
   console.log('  - ai-configurations/github-copilot-vscode.json');
+  console.log('  - ai-configurations/warp-global-rules.md (Warp Global Rules)');
   console.log('\n📖 Documentazione: ai-configurations/README.md');
   console.log('💡 Modifica solo base-config.json e riesegui questo script.\n');
   
