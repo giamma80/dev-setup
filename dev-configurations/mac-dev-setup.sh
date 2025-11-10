@@ -426,12 +426,18 @@ acquire_lock || exit 1
 # Prerequisiti
 log_info "Prerequisiti..."
 
-MACOS_VERSION=$(sw_vers -productVersion)
+MACOS_VERSION=$(sw_vers -productVersion 2>/dev/null || echo "unknown")
 MACOS_MAJOR=$(echo "$MACOS_VERSION" | cut -d. -f1)
 ARCH=$(uname -m)
 log_verbose "macOS $MACOS_VERSION ($ARCH)"
 
-[[ $MACOS_MAJOR -lt $MIN_MACOS_MAJOR ]] && { log_error "macOS $MIN_MACOS_MAJOR+ richiesto"; exit 1; }
+# Verifica che MACOS_MAJOR sia numerico
+if [[ ! "$MACOS_MAJOR" =~ ^[0-9]+$ ]]; then
+    log_error "Impossibile determinare versione macOS: $MACOS_VERSION"
+    exit 1
+fi
+
+[[ $MACOS_MAJOR -lt $MIN_MACOS_MAJOR ]] && { log_error "macOS $MIN_MACOS_MAJOR+ richiesto (rilevato: $MACOS_MAJOR)"; exit 1; }
 
 if ! xcode-select -p &>/dev/null; then
     log_error "Xcode Command Line Tools richiesti"
